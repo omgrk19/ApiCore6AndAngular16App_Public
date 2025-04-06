@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IdentityModel.Tokens.Jwt;
 using DataModels.Models;
-using DataModels.Models;
 using Repositories.Repositories.Interfaces.CommonInterface;
 
 namespace Repositories.Repositories.Interfaces

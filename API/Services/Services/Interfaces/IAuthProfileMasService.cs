@@ -1,6 +1,5 @@
 ﻿using DataModels.Auth;
 using DataModels.Models;
-using DataModels.Models;
 using Services.Services.Interfaces.CommonInterface;
 
 namespace Services.Services.Interfaces

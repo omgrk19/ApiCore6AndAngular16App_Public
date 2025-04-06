@@ -12,7 +12,7 @@ using DataModels.Models;
 using DataModels.Auth;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
-using DataModels.Models;
+
 using Services.Services.Interfaces;
 
 namespace WebApi.Controllers

@@ -21,9 +21,8 @@ namespace WebApi.Controllers
         private readonly AppDbContext _context;
         private readonly IEmployeeService _service;
 
-        public EmployeeController(AppDbContext context, IEmployeeService service)
-        {
-            _context = context;
+        public EmployeeController(IEmployeeService service)
+        {            
             _service = service;
         }
 

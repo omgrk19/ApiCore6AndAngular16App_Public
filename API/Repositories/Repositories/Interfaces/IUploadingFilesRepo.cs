@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using DataModels.Models;
 using DataModels.Auth;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces.CommonInterface;

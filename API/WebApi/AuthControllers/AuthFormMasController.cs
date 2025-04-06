@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataModels.DataUtilities;
-using DataModels.Models;
 using DataModels.Auth;
 using DataModels.Models;
 using Services.Services.Interfaces;

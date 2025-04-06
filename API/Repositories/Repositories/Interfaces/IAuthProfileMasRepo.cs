@@ -1,6 +1,5 @@
 ﻿using DataModels.Auth;
 using DataModels.Models;
-using DataModels.Models;
 using Repositories.Repositories.Interfaces.CommonInterface;
 
 namespace Repositories.Repositories.Interfaces

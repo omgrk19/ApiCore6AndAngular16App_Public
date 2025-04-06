@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using DataModels.DataUtilities;
 using DataModels.Models;
-using DataModels.Models;
 using Repositories.Repositories.Interfaces;
 
 namespace Repositories.Repositories

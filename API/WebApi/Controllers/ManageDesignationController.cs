@@ -15,13 +15,10 @@ namespace WebApiCore6CustomAuth.AuthControllers
     [Route("api/[controller]")]
     [ApiController]
     public class ManageDesignationController : ControllerBase
-    {
-        private readonly AppDbContext _context;
+    {        
         private readonly IManageDesignationService _service;
-
         public ManageDesignationController(AppDbContext context, IManageDesignationService service)
         {
-            _context = context;
             this._service = service;
         }
 

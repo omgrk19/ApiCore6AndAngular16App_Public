@@ -16,12 +16,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class DesignationController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly IDesignationService _service;
-
-        public DesignationController(AppDbContext context, IDesignationService service)
+        public DesignationController(IDesignationService service)
         {
-            _context = context;
+            
             _service = service;
         }
 

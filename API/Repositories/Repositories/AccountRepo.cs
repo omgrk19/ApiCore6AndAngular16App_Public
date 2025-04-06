@@ -8,9 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-
 using DataModels.DataUtilities;
-using DataModels.Models;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
 

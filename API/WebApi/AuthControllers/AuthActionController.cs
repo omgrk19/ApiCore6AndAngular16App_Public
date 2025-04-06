@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataModels.DataUtilities;
-using DataModels.Models;
 using DataModels.Auth;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
@@ -20,8 +19,7 @@ namespace WebApi.AccountControllers
     [Route("api/[controller]")]
     [ApiController]
     public class AuthActionController : ControllerBase
-    {
-        private readonly AppDbContext _context;
+    {        
         private readonly IAuthActionService _service;
 
         public AuthActionController(IAuthActionService service)

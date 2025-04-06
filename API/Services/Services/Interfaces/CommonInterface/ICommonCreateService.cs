@@ -1,5 +1,4 @@
 ﻿using DataModels.Models;
-using DataModels.Models;
 
 namespace Services.Services.Interfaces.CommonInterface
 {

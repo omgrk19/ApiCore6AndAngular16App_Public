@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IdentityModel.Tokens.Jwt;
 using DataModels.Auth;
-using DataModels.Models;
 using DataModels.Auth;
 using DataModels.Models;
 using Services.Services.Interfaces.CommonInterface;
