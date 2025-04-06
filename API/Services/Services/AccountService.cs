@@ -109,21 +109,17 @@ namespace Services.Services
             try
             {
                 if (signedin_userid != null)
-                {
-                    //var user = await (from x in _context.auth_user
-                    //                  where x.userid == signedin_userid
-                    //                  select x).FirstOrDefaultAsync();
+                {                    
 
                     var user = await _repo.GetUserByUserId(signedin_userid);
 
                     if (u.FilePath != null && user != null)
                     {
-                        await _repo.UpdateFilePath(u, user);
-                        //return Ok(new { PhotoUrl = u.FilePath });
+                        await _repo.UpdateFilePath(u, user);                        
                         return (0, "", u.FilePath);
                     }
                 }
-                //return BadRequest("First Login now");
+                
                 return (400, "First Login now", null);
             }
             catch (Exception ex)

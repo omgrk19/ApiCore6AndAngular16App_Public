@@ -101,58 +101,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, JwtSecurityToken)> MultiFuntion(auth_user? user)
-        {
-            try
-            {
-                //Check Authoriztion Updates
-                await checkAuthorizeUpdates.CheckEntry();
-
-                var authClaims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.username),
-                        new Claim(ClaimTypes.Email, user.email),
-                        new Claim(ClaimTypes.NameIdentifier, user.userid),
-                        //new Claim(ClaimTypes.Sid, user.profileid),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    };
-
-                //Adding Admin-Role
-                if (user.profileid == "Admin")
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, "Admin-Role"));
-                }
-
-                var user_auth = await _context.auth_profile_form_action.Where(x => x.ProfileId == user.profileid).ToListAsync();
-                if (user_auth != null)
-                {
-                    foreach (var item in user_auth)
-                    {
-                        authClaims.Add(new Claim(ClaimTypes.Role, $"{item.FormId}-{item.ActionId}"));
-                    }
-                }
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-                return (0, "", token);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public Task<(int, string, string)> Register(AccountRegisterViewModel model)
-        {
-            throw new NotImplementedException();
-        }
+        
         public async Task<(int, string)> ManagingUserProfile(auth_user user2, List<auth_profile_form_action> usedProfileOfRoles)
         {
             try
@@ -204,10 +153,7 @@ namespace Repositories.Repositories
             return duplicateStatus;
         }
 
-        public Task<(int, string, auth_user)> UpdateUserPhotoData(UserFileUpdate u)
-        {
-            throw new NotImplementedException();
-        }
+        
 
     }
 }
