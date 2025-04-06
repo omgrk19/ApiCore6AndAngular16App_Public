@@ -1,0 +1,31 @@
+<!-- <ul class="nav pcoded-inner-navbar">
+    <li class="nav-item">
+      <h5> <a routerLink="action" class="nav-link"><i class="feather icon-box"></i> Action</a></h5>
+    </li>
+    <li class="nav-item">
+      <h5> <a routerLink="forms" class="nav-link"><i class="feather icon-box"></i> Forms</a></h5>
+    </li>
+    <li class="nav-item">
+      <h5> <a routerLink="form-action" class="nav-link"><i class="feather icon-box"></i>Forms Action</a></h5>
+    </li>
+    <li class="nav-item">
+      <h5> <a routerLink="profile-form-action" class="nav-link"><i class="feather icon-box"></i>Profile Forms Action</a></h5>
+    </li>
+    <li class="nav-item">
+      <h5> <a routerLink="user-profile-form-action" class="nav-link"><i class="feather icon-box"></i>User Profile Forms Action</a></h5>
+    </li>
+</ul> -->
+
+<div class="btn-group btn-group-toggle" data-toggle="">
+  <label class="btn btn-secondary" [ngClass]="{'focus active': faStatus}" aria-pressed="faStatus" >    
+    <a routerLink="form-action"  (click)="fn_faStatus()" class="text-white" ><i class="feather icon-box"></i>Forms Action</a>
+  </label>
+  <label class="btn btn-secondary" [ngClass]="{'focus active': fpaStatus}"  aria-pressed="fpaStatus">    
+    <a routerLink="profile-form-action"   (click)="fn_fpaStatus()" class="text-white" ><i class="feather icon-box"></i>Profile Forms Action</a>
+  </label>
+  <!-- <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="option3"> Radio
+  </label> -->
+</div>
+
+<router-outlet></router-outlet>

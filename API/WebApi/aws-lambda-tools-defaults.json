@@ -1,0 +1,21 @@
+
+{
+    "region" : "us-east-1",
+    "profile" : "RinkeshGp3-iam",
+    "configuration" : "Release",
+    "framework"     : "net6.0",
+    "function-name" : "myLambdaFunctionDotNet8APIs-3",
+    "function-description" : "",
+    "package-type"         : "Zip",
+    "function-handler"     : "WebApiCore6CustomAuth",
+    "function-memory-size" : 512,
+    "function-role"        : "arn:aws:iam::715841342303:role/service-role/myLambdaFunctionDotNet8APIs-3-role-qja8woou",
+    "function-timeout"     : 15,
+    "function-runtime"     : "dotnet6",
+    "function-architecture" : "x86_64",
+    "function-subnets"      : "",
+    "function-security-groups" : "",
+    "tracing-mode"             : "PassThrough",
+    "environment-variables"    : "",
+    "image-tag"                : ""
+}

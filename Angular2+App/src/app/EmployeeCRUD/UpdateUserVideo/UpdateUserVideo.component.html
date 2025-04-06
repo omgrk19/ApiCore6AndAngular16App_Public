@@ -1,0 +1,85 @@
+<!-- <app-page-title [pageTitleName]="pageTitle"></app-page-title> -->
+<!-- [ Main Content Body ] start -->
+<div class="row">
+    <!-- sessions-section start -->
+    <div class="col-xl-12 col-md-6">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>Update User Video</h5>
+            </div>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-auto">
+                        <label for="FirstName">First Name</label>
+                        <span>:&nbsp;</span> <span>{{ firstName }}</span>
+
+                    </div>
+                    <div class="col-auto">
+                        <label for="lastName">Last Name</label>
+                        <span>:&nbsp;</span><span>{{ lastName }}</span>
+                    </div>
+                    
+                    <div class="col-auto">
+                        <label for="emailId">Email ID</label>
+                        <span>:&nbsp;</span><span>{{ emailId }}</span>
+                    </div>
+                    <div class="col-auto">
+                        <label for="mobile">Mobile </label>
+                        <span>:&nbsp;</span><span>{{ mobile }}</span>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+
+                    <div class="col-auto">
+                        <label for="gender">Gender</label>
+                        <span>:&nbsp;</span><span>{{ (isMaleorFemale===true?"Male":"Female") }}</span>
+                    </div>
+
+                    <div class="col-auto">
+                        <label for="birthDate">DOB</label>
+                        <span>:&nbsp;</span><span>{{ birthDate | date:'dd-MMM-yyyy' }}</span>
+                    </div>
+                    <div class="col-auto">
+                        <label for="designationId">Designation</label>
+                        <span>:&nbsp;</span><span>{{ designationName }}</span>
+
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-auto">
+                        <label for="birthDate">Video Upload</label>
+                        <!-- <input  type="file" accept="image/*" (change)="changeImage($event)" [value]="imgUrl"> -->
+                        <input type="file" class="form-control" accept="video/*," (change)="changeImage($event,null)">
+                        <!-- <input  type="file" accept="image/*" formControlName="imageFile" (change)="changeImage($event,null)" > -->
+                    </div>
+                    <div class="col-auto">
+                        <br>
+                        <!-- <a routerLink="/userlist2" class="btn btn-primary mt-2" style="color: white;">Back to List</a> -->
+                        <a routerLink="/employee/view/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Back to
+                            View</a>
+                    </div>
+                </div>
+                <div class="row mt-3">
+
+                    <div class="col-auto">
+                        <!-- <img [src]="documentUrl"> -->
+
+                        <a href="{{videoUrl}}">Video File</a><br>
+
+                        <video width="320" height="240" controls autoplay>
+                            <source [src]="videoUrl" type="video/mp4">
+                            <!-- <source [src]="videoUrl" type="video/ogg"> -->
+                            Your browser does not support the video tag.
+                        </video>                        
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- [ Main Content Body ] end -->

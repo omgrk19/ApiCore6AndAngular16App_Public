@@ -1,0 +1,141 @@
+<!-- <app-page-title [pageTitleName]="pageTitle" ></app-page-title> -->
+<!-- [ Main Content Body ] start -->
+<div class="row">
+    <!-- sessions-section start -->
+    <div class="col-xl-12 col-md-6">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>Add/Edit</h5>
+            </div>
+            <div class="card-header">
+                <!-- <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_SaveData()"> -->
+                <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_InsertData()">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="FirstName">First Name</label>
+                            <!-- <input type="text" class="form-control" formControlName="firstName" #tvFirstName
+                                aria-describedby="emailHelp" placeholder="First Name">
+                            <p class="alert-danger"
+                                *ngIf="formGroupUserDataForm.controls.firstName.errors?.['required']
+                                    && formGroupUserDataForm.controls.firstName.dirty
+                                    && formGroupUserDataForm.controls.firstName.touched
+                                ">
+                                Custom required field
+                            </p> -->
+                            <!-- <app-input [control]="firstName" type="text" placeholder="First Name"  ></app-input> -->
+                            <app-input [control]="firstName" type="text" placeholder="First Name"></app-input>
+                        </div>
+                        <div class="col-auto">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" formControlName="lastName"
+                                aria-describedby="emailHelp" placeholder="Last Name">
+                        </div>
+                        <div class="col-auto">
+                            <label for="departmentId">Department</label>
+                            <select class="form-control" formControlName="departmentId" aria-describedby="emailHelp"
+                                #tvDepartmentId (change)="fn_desigList(tvDepartmentId.value)" placeholder="Department">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let dept of deptList" value="{{ dept.id }}">{{
+                                    dept.departmentName }}</option>
+
+                            </select>
+                            <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.departmentId.errors?.['required']
+                                && formGroupUserDataForm.controls.departmentId.dirty
+                                && formGroupUserDataForm.controls.departmentId.touched
+                            ">
+                                Custom required field
+                            </p>
+                        </div>
+                        <div class="col-auto">
+                            <label for="designationId">Designation</label>
+                            <select class="form-control" formControlName="designationId" aria-describedby="emailHelp"
+                                placeholder="Designation">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let desig of desigList" value="{{ desig.designationId }}">{{
+                                    desig.designationName }}</option>
+
+                            </select>
+                            <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.designationId.errors?.['required']
+                                && formGroupUserDataForm.controls.designationId.dirty
+                                && formGroupUserDataForm.controls.designationId.touched
+                            ">
+                                Required field
+                            </p>
+                        </div>
+                        <div class="col-auto">
+                            <label for="emailId">Email ID</label>
+                            <!-- <input type="text" class="form-control" formControlName="emailId"
+                                aria-describedby="emailHelp" placeholder="email Id"> -->
+                            <app-input [control]="emailId" type="email" placeholder="Email Id"></app-input>
+                        </div>
+                        <div class="col-auto">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" maxlength="10" class="form-control" formControlName="mobile"
+                                aria-describedby="mobileHelp" placeholder="Mobile No">
+                            <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.mobile.errors?.['maxlength']">
+                                Maximum length is 10 charactors
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-auto">
+                            <label for="password">Password</label>
+                            <!-- <input type="password" class="form-control" formControlName="password"
+                                aria-describedby="emailHelp" placeholder="Password"> -->
+                            <!-- <p class="alert-danger"
+                                *ngIf="formGroupUserDataForm.controls.password.errors?.['required']
+                                && formGroupUserDataForm.controls.password.dirty
+                                && formGroupUserDataForm.controls.password.touched
+                                ">
+                                Password required field
+                            </p> -->
+                            <app-input [control]="password" type="password" placeholder="Password"></app-input>
+
+                        </div>
+                        <div class="col-auto">
+                            <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="radio" class="form-check-input" formControlName="isMaleorFemale"
+                                    [value]="true" [(ngModel)]="isMaleorFemale" id="inlineRadio1">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="isMaleorFemale"
+                                    [value]="false" [(ngModel)]="isMaleorFemale" id="inlineRadio2">
+                                <label class="form-check-label" for="inlineRadio2">Fe-Male</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <label for="birthDate">DOB</label>
+                            <input type="date" class="form-control" formControlName="birthDate"
+                                value="{{ birthDate2 | date:'yyyy-MM-dd' }}" aria-describedby="birthDate"
+                                placeholder="Birsth Date">
+                        </div>
+
+                        <div class="col-auto">
+                            <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="checkbox" class="form-check-input" formControlName="isActive" id="isActive"
+                                    aria-describedby="emailHelp" placeholder="Last Name">
+                                <label class="form-check-label" for="isActive">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-auto">
+                            <br>
+                            <button type="submit" [disabled]="userCompleteForm.invalid" #tv_btn_save value="Save"
+                                class="btn btn-primary mt-2 disabled:opacity-100">Save</button>
+                            <a [routerLink]="['/employee','list']" style="color: white;"
+                                class="btn btn-primary mt-2 disabled:opacity-100">List</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content Body ] end -->
+
+<!-- Model -->
+<app-model></app-model>
