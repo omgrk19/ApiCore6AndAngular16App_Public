@@ -19,136 +19,76 @@ export class ApiUserService {
 
   }
 
-  getToken(): any {
 
-    if (localStorage.length > 0) {
-      var data = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('localkey'))))
-      return data.token;
-    }
-  }
 
 
   //employee
   getEmployee(id: any) {
-    //let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdEB0ZXN0LmNvbSIsImp0aSI6IjhiMDE2NWNmLWI4OGQtNDJhMS1hZTAxLWJiNDFlNzJmMDVhNSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3Mjk5NTc0OTIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODQiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQyMDAifQ.9W1awZlQ2ywNVSGvBX5r_Kokx1fGlKctkXmeL2nRcVo';
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/Employee/${id}`, { headers: hdr });
+    return this.http.get<any>(`${this.cBaseUrl}/Employee/${id}`);
   }
-  getEmployeeList(pageNo: number, pageSize: number, id: any = 0, departmentId:any=0, designationId: any = 0, firstName: any = "", mobile: any = "") {
+  getEmployeeList(pageNo: number, pageSize: number, id: any = 0, departmentId: any = 0, designationId: any = 0, firstName: any = "", mobile: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/Employee?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&firstName=${firstName}
       &mobile=${mobile}&departmentId=${departmentId}&designationId=${designationId}`
-      , { headers: hdr }
     );
   }
 
   addEmployee(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/Employee`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/Employee`, data);
   }
 
   updateEmployee(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/Employee/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/Employee/${id}`, data);
   }
 
   deleteEmployee(id: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/Employee/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/Employee/${id}`);
   }
 
   //update employee file path in db
   updateEmployeeFilePath(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/Employee/UpdateFile/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/Employee/UpdateFile/${id}`, data);
   }
   //update employee file path in db, end
   //employee end
 
   //designation
   getDesigList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/Designation`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/Designation`);
   }
 
 
   getDesigsWithPage(pageNo: number, pageSize: number, id: any = 0, designationId: any = 0, designationName: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/Designation?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&designationName=${designationName}&designationId=${designationId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getDesig(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/Designation/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/Designation/${id}`);
   }
 
   postDesig(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/Designation`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/Designation`, data);
   }
 
   putDesig(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/Designation/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/Designation/${id}`, data);
   }
 
   deleteDesig(id: number) {
-    debugger
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/Designation/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/Designation/${id}`);
   }
 
   //designation end
@@ -156,245 +96,146 @@ export class ApiUserService {
 
   //department
   getDeptList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/Department`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/Department`);
   }
 
 
   getDeptWithPage(pageNo: number, pageSize: number, id: any = 0, designationId: any = 0, designationName: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+
     return this.http.get<any>(`${this.cBaseUrl}/Department?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&designationName=${designationName}&designationId=${designationId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getDept(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/Department/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/Department/${id}`);
   }
 
   postDept(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/Department`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/Department`, data);
   }
 
   putDept(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/Department/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/Department/${id}`, data);
   }
 
   deleteDept(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/Department/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/Department/${id}`);
   }
   //department end
 
   //action
   getActionList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthAction`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthAction`);
   }
 
 
   getActionWithPage(pageNo: number, pageSize: number, id: any = 0, designationId: any = 0, action: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/AuthAction?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&action=${action}`
-      , { headers: hdr }
     );
   }
 
 
   getAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthAction/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthAction/${id}`);
   }
 
   postAction(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthAction`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthAction`, data);
   }
 
   putAction(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/AuthAction/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/AuthAction/${id}`, data);
   }
 
   deleteAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthAction/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthAction/${id}`);
   }
   //action end
 
   //form mas
   getFormList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthFormMas`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthFormMas`);
   }
 
 
   getFormWithPage(pageNo: number, pageSize: number, id: any = 0, formid: any = "", form_name: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/AuthFormMas?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&formid=${formid}`
-      , { headers: hdr }
+
     );
   }
 
 
   getForm(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthFormMas/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthFormMas/${id}`);
   }
 
   postForm(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthFormMas`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthFormMas`, data);
   }
 
   putForm(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/AuthFormMas/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/AuthFormMas/${id}`, data);
   }
 
   deleteForm(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthFormMas/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthFormMas/${id}`);
   }
   //form mas end
 
   //profile mas
   getProfileList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthProfileMas`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthProfileMas`);
   }
 
 
   getProfileWithPage(pageNo: number, pageSize: number, id: any = 0, formid: any = "", form_name: any = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+
     return this.http.get<any>(`${this.cBaseUrl}/AuthProfileMas?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&formid=${formid}`
-      , { headers: hdr }
+
     );
   }
 
 
   getProfile(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`);
   }
 
   postProfile(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthProfileMas`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthProfileMas`, data);
   }
 
   putProfile(id: number, data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`, data);
   }
 
   deleteProfile(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthProfileMas/${id}`);
   }
   //profile mas end
 
@@ -402,12 +243,8 @@ export class ApiUserService {
   //user mas
 
   getUserList() {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthUser`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthUser`);
   }
 
 
@@ -468,43 +305,27 @@ export class ApiUserService {
 
   getManageFormActionWithPage(pageNo: number, pageSize: number, id: any = 0, formId: any = "", actionId: any = 0) {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+
     return this.http.get<any>(`${this.cBaseUrl}/AuthManageFormAction?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&formid=${formId}&actionId=${actionId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getManageFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthManageFormAction/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthManageFormAction/${id}`);
   }
 
   postManageFormAction(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthManageFormAction`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthManageFormAction`, data);
   }
 
 
   deleteManageFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageFormAction/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageFormAction/${id}`);
   }
   //manage form action end
 
@@ -512,204 +333,137 @@ export class ApiUserService {
   //manage profile form action 
   getManageProfileFormActionWithPage(pageNo: number, pageSize: number, id: any = 0, profileId: string = "", formId: any = "", actionId: any = 0) {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/AuthManageProfileFormAction?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&profileId=${profileId}&formid=${formId}&actionId=${actionId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getManageProfileFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthManageProfileFormAction/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthManageProfileFormAction/${id}`);
   }
 
   postManageProfileFormAction(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthManageProfileFormAction`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthManageProfileFormAction`, data);
   }
 
 
   deleteManageProfileFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageProfileFormAction/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageProfileFormAction/${id}`);
   }
   //manage profile form action end
 
   //manage user profile form action
   getManageUserProfileFormActionWithPage(pageNo: number, pageSize: number, id: any = 0, userId: string = "", profileId: string = "", formId: any = "", actionId: any = 0) {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+
     return this.http.get<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&userId=${userId}&profileId=${profileId}&formid=${formId}&actionId=${actionId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getManageUserProfileFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction/${id}`);
   }
 
   postManageUserProfileFormAction(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction`, data);
   }
 
 
   deleteManageUserProfileFormAction(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/AuthManageUserProfileFormAction/${id}`);
   }
   //manage user profile form action end
 
   //manage department designtion  
   getManageDesignationWithPage(pageNo: number, pageSize: number, id: any = 0, departmentId: string = "", designationId: string = "") {
 
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
     return this.http.get<any>(`${this.cBaseUrl}/ManageDesignation?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&departmentId=${departmentId}&designationId=${designationId}`
-      , { headers: hdr }
+
     );
   }
 
 
   getManageDesignation(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.get<any>(`${this.cBaseUrl}/ManageDesignation/${id}`, { headers: hdr });
+
+    return this.http.get<any>(`${this.cBaseUrl}/ManageDesignation/${id}`);
   }
 
   postManageDesignation(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.post<any>(`${this.cBaseUrl}/ManageDesignation`, data, { headers: hdr });
+
+    return this.http.post<any>(`${this.cBaseUrl}/ManageDesignation`, data);
   }
 
 
   deleteManageDesignation(id: number) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.delete<any>(`${this.cBaseUrl}/ManageDesignation/${id}`, { headers: hdr });
+
+    return this.http.delete<any>(`${this.cBaseUrl}/ManageDesignation/${id}`);
   }
   //manage department designtion end
 
 
   //update user file path in db
   updateUserFilePath(data: any) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return this.http.put<any>(`${this.cBaseUrl}/Account2/UpdatePhotoData`, data, { headers: hdr });
+
+    return this.http.put<any>(`${this.cBaseUrl}/Account2/UpdatePhotoData`, data);
   }
   //update user file path in db, end
 
 
   //upload files
   uploadImage(id: any, Image: File) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      // 'Content-Type': 'application/json',      
-      'Authorization': `Bearer ${auth_token}`
-    });
+    // const hdr = new HttpHeaders({
+    //   // 'Content-Type': 'application/json',      
+    //   'Authorization': `Bearer ${auth_token}`
+    // });
 
     const formData: FormData = new FormData();
     formData.append("Image", Image, Image.name)
-    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/image/${id}`, formData, { headers: hdr })
+    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/image/${id}`, formData
+      //, { headers: hdr }
+    )
+  }
+
+  
+
+  //upload files
+  uploadImageNew(id: any, Image: File) {    
+
+    const formData: FormData = new FormData();
+    formData.append("Image", Image, Image.name)
+    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/imageNew/${id}`, formData
+    )
   }
   //upload files
-  uploadImageNew(id: any, Image: File) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      // 'Content-Type': 'application/json',      
-      'Authorization': `Bearer ${auth_token}`
-    });
+  uploadImageUser(Image: File) {   
 
     const formData: FormData = new FormData();
     formData.append("Image", Image, Image.name)
-    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/imageNew/${id}`, formData, { headers: hdr })
-  }
-  //upload files
-  uploadImageUser(Image: File) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      // 'Content-Type': 'application/json',      
-      'Authorization': `Bearer ${auth_token}`
-    });
-
-    const formData: FormData = new FormData();
-    formData.append("Image", Image, Image.name)
-    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/imageNew`, formData, { headers: hdr })
+    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/imageNew`, formData    
+    )
   }
 
   uploadDocument(id: any, Doc: File) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+    
 
     const formData: FormData = new FormData();
     formData.append("Doc", Doc, Doc.name)
-    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/doc/${id}`, formData, { headers: hdr })
+    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/doc/${id}`, formData)
   }
 
-  uploadVideo(id: any, Video: File) {
-    let auth_token = this.getToken();
-    const hdr = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
+  uploadVideo(id: any, Video: File) {    
 
     const formData: FormData = new FormData();
     formData.append("Video", Video, Video.name)
-    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/video/${id}`, formData, { headers: hdr })
+    return this.http.post<any>(`${this.cBaseUrl}/UploadingFiles/video/${id}`, formData)
   }
   //upload files end
 

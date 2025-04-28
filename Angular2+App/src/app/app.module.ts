@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { LoginComponent } from './login/login.component';
@@ -30,6 +30,8 @@ import { UnAuthenticateComponent } from './un-authenticate/un-authenticate.compo
 import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
 import { GenderPipe } from './pipes/gender.pipe';
+import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { ForesponseInterceptor } from './interceptors/foresponse.interceptor';
 
 //import { ProfileComponent } from './header/profile/profile.component';
 
@@ -79,7 +81,10 @@ import { GenderPipe } from './pipes/gender.pipe';
     GenderPipe   
   ],  
 
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ForesponseInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

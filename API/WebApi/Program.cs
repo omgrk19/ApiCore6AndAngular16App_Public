@@ -64,12 +64,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 //Add cores 
+//builder.Services.AddCors(x => x.AddPolicy("AllowSpecificOrigin", bb =>
 builder.Services.AddCors(x => x.AddPolicy("corsapp", bb =>
 {
     //bb.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader();
     //bb.WithOrigins("http://localhost:4200/").AllowAnyOrigin().AllowAnyHeader();
     //bb.WithOrigins("http://localhost:4200/", "https://apiforangulartest.omss.in/", "https://apiforangulartest.omss.info/", "https://apiforangulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    bb.WithOrigins("http://localhost:4200/", "https://angulartest.omss.in/", "https://angulartest.omss.info/", "https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    //bb.WithOrigins("http://localhost:4200/", "https://angulartest.omss.in/", "https://angulartest.omss.info/", "https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    bb.WithOrigins("https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 }));
 
 
@@ -165,6 +167,7 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseCors("corsapp");
+//app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();
