@@ -14,6 +14,12 @@ using Services.Services;
 using Repositories.Repositories.Interfaces;
 using Services.Services.Interfaces;
 using WebApiCore6CustomAuth.Repositories;
+using Services.DTOs;
+using FluentValidation;
+using System;
+using Services.Validators;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +27,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddControllers()
+    .AddFluentValidation(fv =>
+    {
+        fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    });
+
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-{
+{    
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
 });
 
@@ -54,6 +68,15 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 #endregion
 
+#region Fluent Validation
+builder.Services.AddValidatorsFromAssemblyContaining<DepartmentInsertValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DepartmentUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DesignationUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DesignationUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<EmployeeInsertValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<EmployeeUpdateValidator>();
+#endregion
+
 builder.Services.AddHttpContextAccessor();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -70,8 +93,8 @@ builder.Services.AddCors(x => x.AddPolicy("corsapp", bb =>
     //bb.WithOrigins("*").AllowAnyOrigin().AllowAnyHeader();
     //bb.WithOrigins("http://localhost:4200/").AllowAnyOrigin().AllowAnyHeader();
     //bb.WithOrigins("http://localhost:4200/", "https://apiforangulartest.omss.in/", "https://apiforangulartest.omss.info/", "https://apiforangulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    //bb.WithOrigins("http://localhost:4200/", "https://angulartest.omss.in/", "https://angulartest.omss.info/", "https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    bb.WithOrigins("https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    //bb.WithOrigins("https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    bb.WithOrigins("http://localhost:4200/", "https://angulartest.omss.in/", "https://angulartest.omss.info/", "https://angulartest.nppnp.com/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
 

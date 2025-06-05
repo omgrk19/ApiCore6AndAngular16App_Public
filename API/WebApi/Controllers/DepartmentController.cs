@@ -10,6 +10,8 @@ using DataModels.DataUtilities;
 
 using DataModels.Models;
 using Services.Services.Interfaces;
+using Services.DTOs;
+using DataModels.FilterModels;
 
 namespace WebApi.Controllers
 {
@@ -31,7 +33,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Department-List")]
         [HttpGet]
-        public async Task<ActionResult<List<Department>>> GetDepartment([FromQuery] Department_Filter filter)
+        public async Task<ActionResult<List<DepartmentDTO>>> GetDepartment([FromQuery] DepartmentFilter filter)
         {
             try
             {
@@ -53,7 +55,7 @@ namespace WebApi.Controllers
         // GET: api/Department/5
         [Authorize(Roles = "Department-View")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetDepartment(int id)
+        public async Task<ActionResult<DepartmentDTO>> GetDepartment(int id)
         {
             try
             {
@@ -79,7 +81,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Department-Edit")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDepartment(int id, Department Department)
+        public async Task<IActionResult> PutDepartment(int id, DepartmentUpdateDTO Department)
         {
             try
             {
@@ -91,7 +93,7 @@ namespace WebApi.Controllers
                 else if (data.Item1 == 409)
                     return Conflict(data.Item2);
 
-                return NoContent();
+                return CreatedAtAction("GetDepartment", data.Item3);                
             }
             catch (Exception ex)
             {
@@ -103,7 +105,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Department-Add")]
         [HttpPost]
-        public async Task<ActionResult<Department>> PostDepartment(Department Department)
+        public async Task<ActionResult<DepartmentDTO>> PostDepartment(DepartmentInsertDTO Department)
         {
             try
             {
@@ -116,7 +118,9 @@ namespace WebApi.Controllers
                 else if (data.Item1 == 409)
                     return Conflict(data.Item2);
 
-                return CreatedAtAction("GetDepartment", new { id = data.Item3.Id }, data.Item3);
+                //return NoContent();
+
+                return CreatedAtAction("GetDepartment", data.Item3);
             }
             catch (Exception ex)
             {

@@ -17,7 +17,7 @@ namespace Services.Services
            return await _repo.GetList(filter);
         }
 
-        public async Task<(int, string, ManageDesignation)> Add(ManageDesignation model)
+        public async Task<(int, string, object)> Add(ManageDesignation model)
         {
             return await _repo.Add(model);
         }

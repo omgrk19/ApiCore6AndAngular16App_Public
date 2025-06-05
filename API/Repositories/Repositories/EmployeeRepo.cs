@@ -5,6 +5,7 @@ using System.Data;
 using DataModels.DataUtilities;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
+using DataModels.FilterModels;
 
 namespace Repositories.Repositories
 {
@@ -30,7 +31,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(usp_EmployeeDetails_filter filter)
+        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
         {
             usp_EmployeeDetails_Vm usp_EmployeeDetails_Vm = new usp_EmployeeDetails_Vm();
             try
@@ -72,7 +73,8 @@ namespace Repositories.Repositories
                                  UserId = x.UserId,
                                  FirstName = x.FirstName,
                                  BirthDate = x.BirthDate,
-                                 CreateOn = x.CreateOn,
+                                 CreatedOn = x.CreatedOn,
+                                 CreatedBy = x.CreatedBy,
                                  DesignationId = x.DesignationId,
                                  DesignationName = desig.DesignationName,
                                  DepartmentId = x.DepartmentId,
@@ -82,7 +84,8 @@ namespace Repositories.Repositories
                                  IsActive = x.IsActive,
                                  IsMaleorFemale = x.IsMaleorFemale,
                                  LastName = x.LastName,
-                                 ModifieldOn = x.ModifieldOn,
+                                 ModifiedOn = x.ModifiedOn,
+                                 ModifiedBy = x.ModifiedBy,
                                  Password = x.Password,
                                  PhotoUrl = x.PhotoUrl,
                                  DocumentUrl = x.DocumentUrl,
@@ -116,7 +119,7 @@ namespace Repositories.Repositories
                 throw ex;
             }
         }
-        private async Task<usp_EmployeeDetails_Vm> GetEmployeeWithStoredProcedure([FromQuery] usp_EmployeeDetails_filter filter)
+        private async Task<usp_EmployeeDetails_Vm> GetEmployeeWithStoredProcedure([FromQuery] EmployeeFilter filter)
         {
             usp_EmployeeDetails_Vm usp_EmployeeDetails_Vm = new usp_EmployeeDetails_Vm();
             try
@@ -159,7 +162,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, Employee)> Add(Employee Employee)
+        public async Task<(int, string, Employee)> Add(Employee employee)
         {
             try
             {
@@ -170,9 +173,22 @@ namespace Repositories.Repositories
                     return (400, "Entity set 'AppDbContext.Employee'  is null.", null);
                 }
 
-                _context.Employee.Add(Employee);
+                if(!_context.Department.Any(x => x.Id == employee.DepartmentId))
+                {
+                    return (400, "Invalid Department Code.", null);
+                }
+                if(!_context.Designation.Any(x => x.Id == employee.DesignationId))
+                {
+                    return (400, "Invalid Designation Code.", null);
+                }
+                if (!_context.ManageDesig.Any(x => x.DesignationId == employee.DesignationId && x.DepartmentId == employee.DepartmentId))
+                {
+                    return (400, "Invalid Department or Designation Group.", null);
+                }
+
+                _context.Employee.Add(employee);
                 await _context.SaveChangesAsync();
-                return (0, "", Employee);
+                return (0, "", employee);
             }
             catch (Exception ex)
             {
@@ -213,6 +229,21 @@ namespace Repositories.Repositories
             {
                 return (400, "Invalid request", null);
             }
+
+            if (!_context.Department.Any(x => x.Id == employee.DepartmentId))
+            {
+                return (400, "Invalid Department Code.", null);
+            }
+            if (!_context.Designation.Any(x => x.Id == employee.DesignationId))
+            {
+                return (400, "Invalid Designation Code.", null);
+            }
+            if (!_context.ManageDesig.Any(x => x.DesignationId == employee.DesignationId && x.DepartmentId == employee.DepartmentId))
+            {
+                return (400, "Invalid Department or Designation Group.", null);
+            }
+
+
 
             _context.Entry(employee).State = EntityState.Modified;
 

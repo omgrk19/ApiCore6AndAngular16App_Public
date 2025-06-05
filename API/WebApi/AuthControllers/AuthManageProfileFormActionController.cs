@@ -65,7 +65,7 @@ namespace WebApiCore6CustomAuth.AuthControllers
                     return Conflict(data.Item2);
 
 
-                return CreatedAtAction("GetData", new { id = data.Item3.FormId }, data.Item3);
+                return CreatedAtAction("GetData", data.Item3);
             }
             catch (Exception ex)
             {

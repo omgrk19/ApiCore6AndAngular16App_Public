@@ -1,5 +1,8 @@
-﻿using DataModels.Models;
+﻿using AutoMapper;
+using DataModels.FilterModels;
+using DataModels.Models;
 using Repositories.Repositories.Interfaces;
+using Services.DTOs;
 using Services.Services.Interfaces;
 
 namespace Services.Services
@@ -7,15 +10,18 @@ namespace Services.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepo _repo;
+        private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepo repo)
+        public EmployeeService(IEmployeeRepo repo, IMapper mapper)
         {
             this._repo = repo;
+            this._mapper = mapper;
         }
 
-        public async Task<(int, string, Employee)> Add(Employee Employee)
+        public async Task<(int, string, object)> Add(EmployeeInserteDTO Employee)
         {
-            return await _repo.Add(Employee);
+            var data = await _repo.Add(_mapper.Map<Employee>(Employee));
+            return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 
         public async Task<(int, string)> Delete(int id)
@@ -23,19 +29,22 @@ namespace Services.Services
             return await _repo.Delete(id);
         }
 
-        public async Task<(int, string, Employee)> GetById(int id)
+        public async Task<(int, string, EmployeeDTO)> GetById(int id)
         {
-            return await _repo.GetById(id);
+            var data = await _repo.GetById(id);
+            //return await _repo.GetById(id);
+            return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 
-        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(usp_EmployeeDetails_filter filter)
+        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
         {
             return await _repo.GetList(filter);
         }
 
-        public async Task<(int, string, Employee)> Update(int id, Employee Employee)
+        public async Task<(int, string, object)> Update(int id, EmployeeUpdateDTO Employee)
         {
-            return await _repo.Update(id, Employee);
+            var data = await _repo.Update(id, _mapper.Map<Employee>(Employee));
+            return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 
         public async Task<(int, string)> UpdateEmployeFile(int id, UserFileUpdate userFileUpdate)

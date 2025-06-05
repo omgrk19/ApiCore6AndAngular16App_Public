@@ -23,14 +23,14 @@ namespace Services.Services
             return await _repo.GetById(id);
         }
 
-        public async Task<(int, string, auth_profile_mas)> Add(auth_profile_mas model)
+        public async Task<(int, string, object)> Add(auth_profile_mas model)
         {
             return await _repo.Add(model);
         }
 
-        public Task<(int, string, auth_profile_mas)> Update(int id, auth_profile_mas Model)
+        public async Task<(int, string, object)> Update(int id, auth_profile_mas Model)
         {
-            return _repo.Update(id, Model);
+            return await _repo.Update(id, Model);
         }
 
         public async Task<(int, string)> Delete(int id)

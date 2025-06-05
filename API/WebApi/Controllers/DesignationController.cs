@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using DataModels.DataUtilities;
 using DataModels.Models;
 using Services.Services.Interfaces;
+using DataModels.FilterModels;
+using Services.DTOs;
 
 namespace WebApi.Controllers
 {
@@ -27,7 +29,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Designation-List")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Designation>>> GetDesignation_Master([FromQuery] Designation_Filter filter)
+        public async Task<ActionResult<IEnumerable<DesignationDTO>>> GetDesignation_Master([FromQuery] DesignationFilter filter)
         {
             try
             {
@@ -50,7 +52,7 @@ namespace WebApi.Controllers
         // GET: api/Designation/5
         [Authorize(Roles = "Designation-View")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Designation>> GetDesignation_Master(int id)
+        public async Task<ActionResult<DesignationDTO>> GetDesignation_Master(int id)
         {
             try
             {
@@ -74,7 +76,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Designation-Edit")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDesignation_Master(int id, Designation designation_Master)
+        public async Task<IActionResult> PutDesignation_Master(int id, DesignationUpdateDTO designation_Master)
         {
             try
             {
@@ -89,7 +91,7 @@ namespace WebApi.Controllers
                     return Conflict(data.Item2);
 
 
-                return NoContent();
+                return CreatedAtAction("GetDesignation_Master", data.Item3);
             }
             catch (Exception ex)
             {
@@ -101,7 +103,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Designation-Add")]
         [HttpPost]
-        public async Task<ActionResult<Designation>> PostDesignation_Master(Designation designation)
+        public async Task<ActionResult<Designation>> PostDesignation_Master(DesignationInsertDTO designation)
         {
             try
             {
@@ -115,7 +117,7 @@ namespace WebApi.Controllers
                     return Conflict(data.Item2);
 
 
-                return CreatedAtAction("GetDesignation_Master", new { id = data.Item3.Id }, data.Item3);
+                return CreatedAtAction("GetDesignation_Master", data.Item3);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ using System.Data;
 using DataModels.DataUtilities;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
+using DataModels.FilterModels;
 
 namespace Repositories.Repositories
 {
@@ -41,7 +42,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, List<Designation>)> GetList(Designation_Filter filter)
+        public async Task<(int, string, List<Designation>)> GetList(DesignationFilter filter)
         {
             try
             {

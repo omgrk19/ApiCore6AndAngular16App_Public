@@ -1,10 +1,12 @@
-﻿using DataModels.Models;
+﻿using DataModels.FilterModels;
+using DataModels.Models;
+using Services.DTOs;
 using Services.Services.Interfaces.CommonInterface;
 
 namespace Services.Services.Interfaces
 {
-    public interface IDesignationService : ICommonGetByIdService<Designation>, ICommonCreateService<Designation>, ICommonUpdateService<Designation>, ICommonDeleteService<Designation>
+    public interface IDesignationService : ICommonGetByIdService<DesignationDTO>, ICommonCreateService<DesignationInsertDTO>, ICommonUpdateService<DesignationUpdateDTO>, ICommonDeleteService<Designation>
     {
-        Task<(int, string, List<Designation>)> GetList(Designation_Filter filter);
+        Task<(int, string, List<DesignationDTO>)> GetList(DesignationFilter filter);
     }
 }

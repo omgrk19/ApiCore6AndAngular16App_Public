@@ -1,10 +1,12 @@
-﻿using DataModels.Models;
+﻿using DataModels.FilterModels;
+using DataModels.Models;
+using Services.DTOs;
 using Services.Services.Interfaces.CommonInterface;
 
 namespace Services.Services.Interfaces
 {
-    public interface IDepartmentService : ICommonGetByIdService<Department>, ICommonCreateService<Department>, ICommonUpdateService<Department>, ICommonDeleteService<Department>
+    public interface IDepartmentService : ICommonGetByIdService<DepartmentDTO>, ICommonCreateService<DepartmentInsertDTO>, ICommonUpdateService<DepartmentUpdateDTO>, ICommonDeleteService<Department>
     {
-        Task<(int, string, List<Department>)> GetList(Department_Filter filter);
+        Task<(int, string, List<DepartmentDTO>)> GetList(DepartmentFilter filter);
     }
 }

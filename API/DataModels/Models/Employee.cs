@@ -16,14 +16,17 @@ namespace DataModels.Models
         public string? Password { get; set; }
         [Required]
         public bool IsMaleorFemale { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public DateTime? CreateOn { get; set; }
-        public DateTime? ModifieldOn { get; set; }
+        public DateTime? BirthDate { get; set; }        
         [Required]
         public bool IsActive { get; set; }
         public string? PhotoUrl { get; set; }
         public string? DocumentUrl { get; set; }
         public string? VideoUrl { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+        public string? ModifiedBy { get; set; }
     }
     public class usp_EmployeeDetails
     {
@@ -41,27 +44,21 @@ namespace DataModels.Models
         [Required]
         public bool? IsMaleorFemale { get; set; }
         public DateTime? BirthDate { get; set; }
-        public DateTime? CreateOn { get; set; }
-        public DateTime? ModifieldOn { get; set; }
+        
         public bool? IsActive { get; set; }
         public string? PhotoUrl { get; set; }
         public string? DocumentUrl { get; set; }
         public string? VideoUrl { get; set; }
+
+
+        public DateTime? CreatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+        public string? ModifiedBy { get; set; }
+
         public int? RowNo { get; set; }
     }
-    public class usp_EmployeeDetails_filter 
-    {
-        //[Required]
-        public int? pageNo { get; set; }
-        //[Required]
-        public int? pageSize { get; set; }       
-        public string? FirstName { get; set; }
-        public int? Id { get; set; }
-        public int? DesignationId { get; set; }
-        public int? DepartmentId { get; set; }
-        public string? Mobile { get; set; }
-
-    }
+    
     public class usp_EmployeeDetails_Vm
     {
         public int pageNo { get; set; }
@@ -81,9 +78,7 @@ namespace DataModels.Models
         public string? EmailId { get; set; }
         public string? Password { get; set; }
         public bool? IsMaleorFemale { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public DateTime? CreateOn { get; set; }
-        public DateTime? ModifieldOn { get; set; }
+        public DateTime? BirthDate { get; set; }        
         public bool? IsActive { get; set; }
     }
     

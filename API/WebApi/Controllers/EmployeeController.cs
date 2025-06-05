@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using DataModels.DataUtilities;
 using DataModels.Models;
 using Services.Services.Interfaces;
+using DataModels.FilterModels;
+using Services.DTOs;
 
 namespace WebApi.Controllers
 {
@@ -30,7 +32,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Employee-List")]
         [HttpGet]
-        public async Task<ActionResult<usp_EmployeeDetails_Vm>> GetEmployee([FromQuery] usp_EmployeeDetails_filter filter)
+        public async Task<ActionResult<usp_EmployeeDetails_Vm>> GetEmployee([FromQuery] EmployeeFilter filter)
         {
             try
             {
@@ -56,7 +58,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Employee-View")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
         {
             try
             {
@@ -80,7 +82,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin")]
         [Authorize(Roles = "Employee-Edit")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee Employee)
+        public async Task<IActionResult> PutEmployee(int id, EmployeeUpdateDTO Employee)
         {
             try
             {
@@ -93,7 +95,7 @@ namespace WebApi.Controllers
                 else if (data.Item1 == 409)
                     return Conflict(data.Item2);
 
-                return NoContent();
+                return CreatedAtAction("GetEmployee", data.Item3);
             }
             catch (Exception ex)
             {
@@ -134,7 +136,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Employee-Add")]
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee Employee)
+        public async Task<ActionResult<Employee>> PostEmployee(EmployeeInserteDTO Employee)
         {
             try
             {
@@ -148,7 +150,7 @@ namespace WebApi.Controllers
                 else if (data.Item1 == 409)
                     return Conflict(data.Item2);
 
-                return CreatedAtAction("GetEmployee", new { id = data.Item3.UserId }, data.Item3);
+                return CreatedAtAction("GetEmployee", data.Item3);
             }
             catch (Exception ex)
             {

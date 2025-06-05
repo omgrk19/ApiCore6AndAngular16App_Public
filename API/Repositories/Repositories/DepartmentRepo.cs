@@ -5,15 +5,20 @@ using System.Data;
 using DataModels.DataUtilities;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
+using DataModels.FilterModels;
+using AutoMapper;
 
 namespace Repositories.Repositories
 {
     public class DepartmentRepo : IDepartmentRepo
     {
         private readonly AppDbContext _context;
-        public DepartmentRepo(AppDbContext context)
+        private readonly IMapper _mapper;
+
+        public DepartmentRepo(AppDbContext context, IMapper mapper)
         {
             this._context = context;
+            this._mapper = mapper;
         }
 
         public async Task<(int, string, Department)> GetById(int id)
@@ -30,7 +35,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, List<Department>)> GetList(Department_Filter filter)
+        public async Task<(int, string, List<Department>)> GetList(DepartmentFilter filter)
         {
             try
             {
@@ -49,7 +54,7 @@ namespace Repositories.Repositories
                            select x;
                 var dataList = await data.ToListAsync();
 
-                return (0, "", dataList);
+                return (0, "", _mapper.Map<List<Department>>(dataList));
 
 
             }

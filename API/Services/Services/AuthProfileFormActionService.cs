@@ -20,7 +20,7 @@ namespace Services.Services
             return await _repo.GetList(filter);
         }
 
-        public async Task<(int, string, auth_profile_form_action)> Add(auth_profile_form_action model)
+        public async Task<(int, string, object)> Add(auth_profile_form_action model)
         {
             return await _repo.Add(model);    
         }

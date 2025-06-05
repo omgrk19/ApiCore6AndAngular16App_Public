@@ -121,7 +121,7 @@ namespace WebApi.AccountControllers
                 else if (data.Item1 == 409)
                     return Conflict(data.Item2);
 
-                return CreatedAtAction("GetData", new { id = data.Item3.Id }, data.Item3);
+                return CreatedAtAction("GetData", data.Item3);
             }
             catch (Exception ex)
             {
