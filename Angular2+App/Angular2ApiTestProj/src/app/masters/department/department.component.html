@@ -11,7 +11,7 @@
                 <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_SaveData()">
                     <div class="row">
                         <div class="col-auto">
-                            <label for="departmentName">Designation Name</label>
+                            <label for="departmentName">Designation Name <span class="text-danger"> *</span> </label>
                             <!-- <input type="text" class="form-control" formControlName="departmentName" #tvDepartmentName
                                 aria-describedby="emailHelp" placeholder="Department Name">
                             <p class="alert-danger" *ngIf=" 
@@ -22,7 +22,7 @@
                                 Custom required field
                             </p> -->
 
-                            <app-input [control]="departmentName" type="text" placeholder="Department Name"
+                            <app-input [control]="departmentName" type="text-danger" placeholder="Department Name"
                             elementId="departmentName" ></app-input>
 
 

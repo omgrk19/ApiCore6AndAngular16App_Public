@@ -12,7 +12,7 @@
                 <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_InsertData()">
                     <div class="row">
                         <div class="col-auto">
-                            <label for="FirstName">First Name</label>
+                            <label for="FirstName">First Name <span class="text-danger"> *</span></label>
                             <!-- <input type="text" class="form-control" formControlName="firstName" #tvFirstName
                                 aria-describedby="emailHelp" placeholder="First Name">
                             <p class="alert-danger"
@@ -31,7 +31,7 @@
                                 aria-describedby="emailHelp" placeholder="Last Name">
                         </div>
                         <div class="col-auto">
-                            <label for="departmentId">Department</label>
+                            <label for="departmentId">Department <span class="text-danger"> *</span></label>
                             <select class="form-control" formControlName="departmentId" aria-describedby="emailHelp"
                                 #tvDepartmentId (change)="fn_desigList(tvDepartmentId.value)" placeholder="Department">
                                 <option value="">-Select-</option>
@@ -47,7 +47,7 @@
                             </p>
                         </div>
                         <div class="col-auto">
-                            <label for="designationId">Designation</label>
+                            <label for="designationId">Designation <span class="text-danger"> *</span></label>
                             <select class="form-control" formControlName="designationId" aria-describedby="emailHelp"
                                 placeholder="Designation">
                                 <option value="">-Select-</option>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-auto">
-                            <label for="password">Password</label>
+                            <label for="password">Password <span class="text-danger"> *</span></label>
                             <!-- <input type="password" class="form-control" formControlName="password"
                                 aria-describedby="emailHelp" placeholder="Password"> -->
                             <!-- <p class="alert-danger"
@@ -93,24 +93,43 @@
 
                         </div>
                         <div class="col-auto">
-                            <br>
-                            <div class="form-check form-check-inline mt-3">
-                                <input type="radio" class="form-check-input" formControlName="isMaleorFemale"
-                                    [value]="true" [(ngModel)]="isMaleorFemale" id="inlineRadio1">
-                                <label class="form-check-label" for="inlineRadio1">Male</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" formControlName="isMaleorFemale"
-                                    [value]="false" [(ngModel)]="isMaleorFemale" id="inlineRadio2">
-                                <label class="form-check-label" for="inlineRadio2">Fe-Male</label>
-                            </div>
-                        </div>
-                        <div class="col-auto">
                             <label for="birthDate">DOB</label>
                             <input type="date" class="form-control" formControlName="birthDate"
                                 value="{{ birthDate2 | date:'yyyy-MM-dd' }}" aria-describedby="birthDate"
                                 placeholder="Birsth Date">
                         </div>
+                        <div class="col-auto">
+                            <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Male'" [(ngModel)]="gender" id="gender1" #gender1 >
+                                <label class="form-check-label" for="gender1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Female'" [(ngModel)]="gender" id="gender2">
+                                <label class="form-check-label" for="gender2">Female</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Other'" [(ngModel)]="gender" id="gender3">
+                                <label class="form-check-label" for="gender3">Other</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="radio" class="form-check-input" formControlName="isMarried"
+                                    [value]="true" [(ngModel)]="isMarried" id="inlineRadio1" >
+                                <label class="form-check-label" for="inlineRadio1">Married</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="isMarried"
+                                    [value]="false" [(ngModel)]="isMarried" id="inlineRadio2">
+                                <label class="form-check-label" for="inlineRadio2">Unmarried</label>
+                            </div>
+                        </div>
+                        
 
                         <div class="col-auto">
                             <br>

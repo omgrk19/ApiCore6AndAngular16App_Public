@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiUserService } from 'src/app/services/api-user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -11,7 +11,7 @@ import { WaitingService } from 'src/app/services/waiting.service';
   templateUrl: './addnew.component.html',
   styleUrls: ['./addnew.component.css']
 })
-export class AddnewComponent implements OnInit {
+export class AddnewComponent implements OnInit,AfterViewInit {
 
   @ViewChild(ModelComponent) modelComponent!: ModelComponent
 
@@ -28,9 +28,10 @@ export class AddnewComponent implements OnInit {
   designationId = new FormControl<number>(0, Validators.required);
   // emailId = new FormControl<string | null>('');
   emailId = new FormControl<string>('', Validators.email);
-  mobile = new FormControl<string | null>('',Validators.maxLength(10));
+  mobile = new FormControl<string | null>('', Validators.maxLength(10));
   password = new FormControl<string>('', Validators.required);
-  isMaleorFemale = new FormControl<boolean>(false, Validators.required);
+  isMarried = new FormControl<boolean>(true, Validators.required);
+  gender = new FormControl<string>("Male", Validators.required);
   birthDate = new FormControl<Date | null>(new Date);
   createOn = new FormControl<Date | null>(new Date());
   modifieldOn = new FormControl<Date | null>(new Date());
@@ -45,22 +46,28 @@ export class AddnewComponent implements OnInit {
     emailId: this.emailId,
     mobile: this.mobile,
     password: this.password,
-    isMaleorFemale: this.isMaleorFemale,
+    isMarried: this.isMarried,
+    gender: this.gender,
     birthDate: this.birthDate,
     createOn: this.createOn,
     modifieldOn: this.modifieldOn,
     isActive: this.isActive,
   })
 
-
+  @ViewChild('gender1') maleRadio!: ElementRef;
 
   constructor(private serviceUserApiService: ApiUserService, private formBuilder: FormBuilder,
     private router: Router, private route: ActivatedRoute, private waitingService: WaitingService) {
     console.log('AddnewComponent loaded')
   }
 
-  ngOnInit(): void {
-    this.fn_deptList()
+  ngOnInit(): void {    
+    this.fn_deptList()    
+  }
+  ngAfterViewInit(): void {
+    // this.maleRadio.nativeElement.checked = true;
+     this.formGroupUserDataForm.get('isMarried')?.setValue(true);
+     this.formGroupUserDataForm.get('gender')?.setValue('Male');
   }
 
 

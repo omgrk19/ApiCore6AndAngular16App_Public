@@ -15,7 +15,8 @@ namespace DataModels.Models
         public string? Mobile { get; set; }
         public string? Password { get; set; }
         [Required]
-        public bool IsMaleorFemale { get; set; }
+        public bool IsMarried { get; set; }
+        public string Gender { get; set; }
         public DateTime? BirthDate { get; set; }        
         [Required]
         public bool IsActive { get; set; }
@@ -42,7 +43,8 @@ namespace DataModels.Models
         public string? Mobile { get; set; }
         public string? Password { get; set; }
         [Required]
-        public bool? IsMaleorFemale { get; set; }
+        public bool? IsMarried { get; set; }
+        public string? Gender { get; set; }
         public DateTime? BirthDate { get; set; }
         
         public bool? IsActive { get; set; }
@@ -77,7 +79,8 @@ namespace DataModels.Models
         public string? LastName { get; set; }
         public string? EmailId { get; set; }
         public string? Password { get; set; }
-        public bool? IsMaleorFemale { get; set; }
+        public bool? IsMarried { get; set; }
+        public string? Gender { get; set; }
         public DateTime? BirthDate { get; set; }        
         public bool? IsActive { get; set; }
     }

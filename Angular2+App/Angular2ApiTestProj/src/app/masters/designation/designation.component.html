@@ -11,7 +11,7 @@
                 <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_SaveData()">
                     <div class="row">
                         <div class="col-auto">
-                            <label for="designationName">Designation Name</label>
+                            <label for="designationName">Designation Name <span class="text-danger"> *</span></label>
                             <app-input [control]="designationName" type="text" placeholder="Designation Name"
                             elementId="designationName"></app-input>
                             <!-- <input type="text" class="form-control" formControlName="designationName" #tvDesignationName

@@ -23,7 +23,8 @@ export class UpdateUserVideoComponent implements OnInit {
   emailId = "";
   mobile = "";
   password = "";
-  isMaleorFemale: boolean = false;
+  isMarried: boolean = false;
+  gender: string = "";
   birthDate: Date = new Date();
   createOn = new Date();
   modifieldOn = new Date();
@@ -66,7 +67,8 @@ export class UpdateUserVideoComponent implements OnInit {
           this.emailId = res.emailId;
           this.mobile = res.mobile;
           this.password = res.password;
-          this.isMaleorFemale = res.isMaleorFemale;
+          this.isMarried = res.isMarried;
+          this.gender = res.gender;
           this.birthDate = res.birthDate;
           this.createOn = res.createOn;
           this.modifieldOn = res.modifieldOn;

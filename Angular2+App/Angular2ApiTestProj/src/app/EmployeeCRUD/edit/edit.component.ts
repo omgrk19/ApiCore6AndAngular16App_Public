@@ -34,7 +34,8 @@ export class EditComponent implements OnInit {
   emailId = new FormControl<string | null>('');
   mobile = new FormControl<string | null>('',Validators.maxLength(10));
   password = new FormControl<string>('', Validators.required);
-  isMaleorFemale = new FormControl<boolean>(false);
+  isMarried = new FormControl<boolean>(false);
+  gender = new FormControl<string | null>("");
   birthDate = new FormControl<Date | null>(new Date);
   createOn = new FormControl<Date | null>(new Date());
   modifieldOn = new FormControl<Date | null>(new Date());
@@ -50,7 +51,8 @@ export class EditComponent implements OnInit {
     emailId: this.emailId,
     mobile: this.mobile,
     password: this.password,
-    isMaleorFemale: this.isMaleorFemale,
+    isMarried: this.isMarried,
+    gender: this.gender,
     birthDate: this.birthDate,
     createOn: this.createOn,
     modifieldOn: this.modifieldOn,
@@ -71,7 +73,8 @@ export class EditComponent implements OnInit {
       emailId: this.emailId,
       mobile: this.mobile,
       password: this.password,
-      isMaleorFemale: this.isMaleorFemale,
+      isMarried: this.isMarried,
+      gender: this.gender,
       birthDate: this.birthDate,
       createOn: this.createOn,
       modifieldOn: this.modifieldOn,
@@ -180,7 +183,8 @@ export class EditComponent implements OnInit {
         this.formGroupUserDataForm.get('emailId')?.setValue(res.emailId)
         this.formGroupUserDataForm.get('mobile')?.setValue(res.mobile)
         this.formGroupUserDataForm.get('password')?.setValue(res.password)
-        this.formGroupUserDataForm.get('isMaleorFemale')?.setValue(res.isMaleorFemale)
+        this.formGroupUserDataForm.get('isMarried')?.setValue(res.isMarried)
+        this.formGroupUserDataForm.get('gender')?.setValue(res.gender)
         this.formGroupUserDataForm.get('birthDate')?.setValue(res.birthDate)
         this.formGroupUserDataForm.get('createOn')?.setValue(res.createOn)
         this.formGroupUserDataForm.get('modifieldOn')?.setValue(res.modifieldOn)

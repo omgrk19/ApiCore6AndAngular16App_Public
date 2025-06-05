@@ -18,7 +18,7 @@
                         <label for="lastName">Last Name</label>
                         <span>:&nbsp;</span><span>{{ lastName }}</span>
                     </div>
-                    
+
                     <div class="col-auto">
                         <label for="emailId">Email ID</label>
                         <span>:&nbsp;</span><span>{{ emailId }}</span>
@@ -31,8 +31,12 @@
                 <div class="row mt-3">
 
                     <div class="col-auto">
-                        <label for="Gender">Gender</label>
-                        <span>:&nbsp;</span><span>{{ (isMaleorFemale===true?"Male":"Female") }}</span>
+                        <label for="isMarried">Married Status </label>
+                        <span>:&nbsp;</span><span>{{ (isMarried===true?"Married":"Unmarried") }}</span>
+                    </div>
+                    <div class="col-auto">
+                        <label for="gender">Gender </label>
+                        <span>:&nbsp;</span><span>{{ gender }}</span>
                     </div>
 
                     <div class="col-auto">
@@ -55,7 +59,8 @@
                     <div class="col-auto">
                         <br>
                         <!-- <a routerLink="/userlist2" class="btn btn-primary mt-2" style="color: white;">Back to List</a> -->
-                        <a routerLink="/employee/view/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Back to
+                        <a routerLink="/employee/view/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Back
+                            to
                             View</a>
                     </div>
                 </div>
