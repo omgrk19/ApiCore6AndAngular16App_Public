@@ -1,0 +1,79 @@
+<form [formGroup]="formGroupUserRegisterForm" #userRegisterForm="ngForm" (ngSubmit)="fn_UserRegister()">
+    <div class="card-body">
+        <img src="../assets/images/logo-dark.png" alt="" class="img-fluid mb-4">
+        <h4 class="mb-3 f-w-400">Sign up into your account</h4>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="feather icon-mail"></i></span>
+            </div>
+            <input type="email" formControlName="email" class="form-control" placeholder="Email address">
+            <p class="col-md-12 alert-danger" *ngIf=" 
+            formGroupUserRegisterForm.controls.email.errors?.['required']
+            && formGroupUserRegisterForm.controls.email.dirty
+            && formGroupUserRegisterForm.controls.email.touched
+            ">
+                Email is mandatory
+            </p>
+            <p class="col-md-12 alert-danger" *ngIf="
+            formGroupUserLoginForm.controls.email.errors?.['email']
+			&& formGroupUserLoginForm.controls.email.dirty
+            && formGroupUserLoginForm.controls.email.touched
+			">
+                Please enter correct email
+            </p>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="feather icon-lock"></i></span>
+            </div>
+            <input type="password" formControlName="password" class="form-control" placeholder="Password">
+            <p class="col-md-12 alert-danger" *ngIf=" 
+            formGroupUserRegisterForm.controls.password.errors?.['required']
+            && formGroupUserRegisterForm.controls.password.dirty
+            && formGroupUserRegisterForm.controls.password.touched
+            ">
+                Please enter the password
+            </p>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="feather icon-lock"></i></span>
+            </div>
+            <input type="password" formControlName="confirmPassword" class="form-control"
+                placeholder="Confirm Password">
+            <p class="col-md-12 alert-danger" *ngIf=" 
+            formGroupUserRegisterForm.controls.confirmPassword.errors?.['required']
+            && formGroupUserRegisterForm.controls.confirmPassword.dirty
+            && formGroupUserRegisterForm.controls.confirmPassword.touched
+            ">
+                Please enter correct confirm password
+            </p>
+        </div>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="feather icon-user"></i></span>
+            </div>
+            <select class="form-control" formControlName="role" aria-describedby="roleHelp" placeholder="Role">
+                <option value="">-Select-</option>
+                <option>Admin</option>
+                <option>User</option>
+            </select>
+            <p class="col-md-12 alert-danger" *ngIf=" 
+            formGroupUserRegisterForm.controls.role.errors?.['required']
+            && formGroupUserRegisterForm.controls.role.dirty
+            && formGroupUserRegisterForm.controls.role.touched
+            ">
+                Please select correct role
+            </p>
+        </div>
+        <div class="form-group text-left mt-2">
+            <div class="checkbox checkbox-primary d-inline">
+                <input type="checkbox" formControlName="loginStatus" id="loginStatus">
+                <label for="loginStatus" class="cr">Sign in due to registration</label>
+            </div>
+        </div>
+        <button [disabled]="userRegisterForm.invalid" id="btnSignUp" class="btn btn-primary mb-4">Sign up Now</button>
+        <h3 [ngClass]="{'text-danger': !regStatus, 'text-success': regStatus}">{{ regMsg }}</h3>
+    </div>
+</form>

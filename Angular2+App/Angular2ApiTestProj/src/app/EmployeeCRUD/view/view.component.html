@@ -1,0 +1,92 @@
+<!-- <app-page-title [pageTitleName]="pageTitle" ></app-page-title> -->
+<!-- [ Main Content Body ] start -->
+<div class="row">
+    <!-- sessions-section start -->
+    <div class="col-xl-12 col-md-6">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>View User</h5>
+            </div>
+            <div class="card-header">
+
+                <div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="FirstName">First Name </label>
+                            <span>:&nbsp;</span><span>{{ firstName }}</span>
+
+                        </div>
+                        <div class="col-auto">
+                            <label for="lastName">Last Name  </label>
+                            <span>:&nbsp;</span><span>{{ lastName }}</span>
+                        </div>
+                        
+                        <div class="col-auto">
+                            <label for="emailId">Email ID </label>
+                            <span>:&nbsp;</span><span>{{ emailId }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <label for="mobile">Mobile </label>
+                            <span>:&nbsp;</span><span>{{ mobile }}</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-auto">
+                            <label for="isMaleorFemale">Gender  </label>
+                            <span>:&nbsp;</span><span>{{ (isMaleorFemale===true?"Male":"Female") }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <label for="birthDate">DOB  </label>
+                            <span>:&nbsp;</span><span>{{ birthDate | date:'dd-MMM-yyyy' }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <label for="designationId">Department  </label>
+                            <span>:&nbsp;</span><span>{{ departmentName }}</span>
+                        </div>                        
+                        <div class="col-auto">
+                            <label for="designationId">Designation  </label>
+                            <span>:&nbsp;</span><span>{{ designationName }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <label for="isActive">Activated  </label>
+                            <span>:&nbsp;</span><span>{{ (isActive===true?"Yes":"No") }}</span>
+                        </div>
+                    </div>                    
+                    <div class="row mt-3">
+
+                        <div class="col-auto">
+                            <br>
+                            <!-- <button type="submit" [disabled]="userCompleteForm.invalid" #tv_btn_save value="Save"
+                                class="btn btn-primary mt-2 disabled:opacity-100">{{ btn_save_text }}</button> -->
+                            <!-- <button type="button" (click)="fn_NavigateToList()" class="btn btn-primary mt-2 disabled:opacity-100">List (button)</button> -->
+                            <a routerLink="/employee/list" class="btn btn-primary mt-2" style="color: white;">List</a>
+                            <a routerLink="/employee/edit/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Edit</a>
+                            <a routerLink="/employee/UpdateImage/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Edit Employee Image</a>
+                            <a routerLink="/employee/UpdateDoc/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Edit Employee Document</a>
+                            <a routerLink="/employee/UpdateVideo/{{userId}}" class="btn btn-primary mt-2 disabled:opacity-100">Edit Employee Video</a>
+                            <a routerLink="/employee/add" style="color: white;" class="btn btn-primary mt-2 disabled:opacity-100">Add New</a>
+                            <button type="button" (click)="fn_DeleteRecord(userId)" class="btn btn-primary mt-2 disabled:opacity-100">Delete</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-auto">
+                            <!-- <img src="{{ photoUrl }}"> -->
+                            <img [src]="photoUrl" width="320" height="240">
+                        </div>                        
+                        <div class="col-auto">                            
+                            <video width="320" height="240" controls autoplay>
+                                <source [src]="videoUrl" type="video/mp4">
+                                <!-- <source [src]="videoUrl" type="video/ogg"> -->
+                                Your browser does not support the video tag.
+                            </video>  
+                        </div>  
+                        <div class="col-auto">
+                            <a href="{{documentUrl}}">PDF File</a>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content Body ] end -->

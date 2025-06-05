@@ -1,0 +1,25 @@
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <h5>{{ page1 }}</h5>
+                </div>
+                <ul class="breadcrumb" id="ulPageTitle">
+                    <li class="breadcrumb-item"><a [routerLink]="'/'">
+                            <i class="feather icon-home"></i></a></li>
+
+                    <!-- <li class="breadcrumb-item" *ngFor="let item of strArr; let i = index"><a
+                            [routerLink]="i === strArr.length-1 ? [] : ['/'+item]">{{ item | uppercase }}</a></li> -->
+                    <li class="breadcrumb-item" *ngFor="let item of strArr; let i = index"><a
+                            [routerLink]="item.value"> {{item.text | uppercase}} </a></li>
+                    <!-- <li class="breadcrumb-item" *ngFor="let item of strArr; let i = index"><a
+                            [routerLink]="f_root(item)">{{ item | uppercase }}</a></li> -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ breadcrumb ] end -->

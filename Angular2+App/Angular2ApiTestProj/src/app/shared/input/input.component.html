@@ -1,0 +1,21 @@
+<!-- <input [formControl]="control" [type]="type" class="form-control" [placeholder]="placeholder"
+    aria-describedby="emailHelp"> -->
+
+<!-- <input type="text" class="form-control" formControlName="firstName" #tvFirstName aria-describedby="emailHelp"
+    placeholder="First Name"> -->
+
+<ng-container>
+    
+    <input [formControl]="control" [type]="type" class="form-control" [id]="elementId" aria-describedby="emailHelp"
+        [placeholder]="placeholder" #childInput>
+        <!-- <ng-template  ngIf="control.dirty && control.touched"> -->
+
+            <p class="alert-danger" *ngIf="control.dirty && control.touched && control.errors?.['required']">
+                Required field
+            </p>
+            <p class="alert-danger" *ngIf="control.dirty && control.touched && control.errors?.['email']">
+                Please enter correct email
+            </p>
+            
+        <!-- </ng-template> -->
+</ng-container>

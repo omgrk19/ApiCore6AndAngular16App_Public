@@ -1,0 +1,109 @@
+<!-- [ Main Content Body ] start -->
+<div class="row">
+    <!-- sessions-section start -->
+    <div class="col-xl-12 col-md-6">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>Manage Form Action </h5>
+            </div>
+            <div class="card-header">                
+                <!-- <form [formGroup]="formGroupUserDataForm" #userCompleteForm="ngForm" (ngSubmit)="fn_SaveData()"> -->
+                    <div class="row">
+
+
+                        <div class="col-auto">
+                            <label for="formId">Form</label>
+                            <select class="form-control" formControlName="formId" aria-describedby="emailHelp"
+                                #tvFormId (change)="fn_UserList(1,tvFormId.value,tvActionId.value)" placeholder="">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let form of formList" value="{{ form.formid }}">{{
+                                    form.form_name }}</option>
+
+                            </select>
+                            <p class="alert-danger" *ngIf=" 
+                                formGroupUserDataForm.controls.formId.errors?.['required']
+                                && formGroupUserDataForm.controls.formId.dirty
+                                && formGroupUserDataForm.controls.formId.touched
+                                ">
+                                Custom required field
+                            </p>
+                        </div>
+                        <div class="col-auto">
+                            <label for="actionId">Action</label>
+                            <select class="form-control" formControlName="actionId" aria-describedby="emailHelp"
+                            #tvActionId (change)="fn_UserList(1,tvFormId.value,tvActionId.value)" placeholder="">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let adata of actionList" value="{{ adata.action }}">{{
+                                    adata.action }}</option>
+
+                            </select>
+                            <p class="alert-danger" *ngIf=" 
+                                formGroupUserDataForm.controls.actionId.errors?.['required']
+                                && formGroupUserDataForm.controls.actionId.dirty
+                                && formGroupUserDataForm.controls.actionId.touched
+                                ">
+                                Custom required field
+                            </p>
+                        </div>
+
+                       
+
+
+                    </div>
+                    <!-- <div class="row mt-3">                        
+                        <div *ngIf="errorMessage.length>0" class="col-auto"><p  class="alert-danger">{{errorMessage}}</p></div>
+                    </div> -->
+                <!-- </form> -->
+            </div>
+
+
+            <div class="card-body px-0 py-0">
+                <div class="table-responsive">
+                    <div class="session-scroll" style="height:478px;position:relative;">
+                        <table class="table table-hover m-b-0">
+                            <thead>
+                                <tr>
+                                    <th><span>Sr.No.</span></th>
+                                    <th><span> Form ID</span></th>
+                                    <th><span> Form Name</span></th>
+                                    <th><span> Action Name</span></th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of userList; let i = index">
+                                    <td>{{ (i+1) }}</td>
+                                    <td>{{ data.formId }}</td>
+                                    <td>{{ data.formName }}</td>
+                                    <td>{{ data.actionId }}</td>
+                                    
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="Page navigation example" *ngIf="pageQty>1">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(1)" aria-label="First"><span
+                                aria-hidden="true">First</span><span class="sr-only">First</span></a></li>
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageNo-1)"
+                            aria-label="Previous"><span aria-hidden="true">«</span><span
+                                class="sr-only">Previous</span></a></li>
+
+                    <li *ngFor="let num of [].constructor(pageQty);let i=index" [ngClass]="(i+1)===pageNo?'active':''"
+                        class="page-item"><a class="page-link" (click)="fn_PageChange(i+1)">{{ i+1 }}</a></li>
+
+                    <!-- <li class="page-item"><a class="page-link" href="#!">2</a></li>    
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li> -->
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageNo+1)" aria-label="Next"><span
+                                aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageQty)" aria-label="Last"><span
+                                aria-hidden="true">Last</span><span class="sr-only">Last</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content Body ] end -->
