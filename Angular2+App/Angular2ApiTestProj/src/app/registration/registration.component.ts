@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiUserService } from '../services/api-user.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { passwordComplexityValidator } from '../services/passwordComplexityValidator';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
   email = new FormControl<string | null>('', [Validators.required, Validators.email]);
-  password = new FormControl<string>('', Validators.required);
+  password = new FormControl<string>('', [Validators.required, passwordComplexityValidator()]);
   confirmPassword = new FormControl<string>('', Validators.required);
   role = new FormControl<string>('', Validators.required);
   loginStatus = new FormControl<boolean>(false, Validators.required);
@@ -29,11 +30,20 @@ export class RegistrationComponent implements OnInit {
     confirmPassword: this.confirmPassword,
     role: this.role,
     loginStatus: this.loginStatus,
+  },{
+    validators: this.passwordsMatchValidator
   })
 
   constructor(private serviceUserApiService: ApiUserService, private formBhuilder: FormBuilder,
     private router: Router, private route: ActivatedRoute) {
 
+  }
+
+  // Custom Validator
+  passwordsMatchValidator(group: AbstractControl): { [key: string]: boolean } | null {    
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
   ngOnInit(): void {

@@ -80,16 +80,39 @@
                     <div class="row mt-3">
                         <div class="col-auto">
                             <label for="password">Password <span class="text-danger"> *</span></label>
-                            <!-- <input type="password" class="form-control" formControlName="password"
-                                aria-describedby="emailHelp" placeholder="Password"> -->
-                            <!-- <p class="alert-danger"
-                                *ngIf="formGroupUserDataForm.controls.password.errors?.['required']
-                                && formGroupUserDataForm.controls.password.dirty
-                                && formGroupUserDataForm.controls.password.touched
-                                ">
-                                Password required field
-                            </p> -->
-                            <app-input [control]="password" type="password" placeholder="Password"></app-input>
+                            <input type="password" class="form-control" formControlName="password"
+                                aria-describedby="emailHelp" placeholder="Password">
+                            <ng-container *ngIf="formGroupUserDataForm.controls.password.dirty
+                                && formGroupUserDataForm.controls.password.touched 
+                                && formGroupUserDataForm.controls.password.errors?.['passwordComplexity']">
+
+                                <!-- <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['pattern']">
+                                    Password suggesion like "Abc@1234"
+                                </p>
+                                <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['minlength']">
+                                    Minimum length is 8 characters
+                                </p> -->
+                                <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['required']">
+                                    Password required field
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasMinLength">
+                                    Password must be at least 8 characters long
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasUpperCase">
+                                    Password must be at least one uppercase letter
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasLowerCase">
+                                    Password must be at least one lowercase letter
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasNumber">
+                                    Password must be at least a number
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasSpecialChar">
+                                    Password must be at least a special character
+                                </p>
+
+                            </ng-container>
+                            <!-- <app-input [control]="password" type="password" placeholder="Password"></app-input> -->
 
                         </div>
                         <div class="col-auto">
@@ -101,35 +124,35 @@
                         <div class="col-auto">
                             <br>
                             <div class="form-check form-check-inline mt-3">
-                                <input type="radio" class="form-check-input" formControlName="gender"
-                                    [value]="'Male'" [(ngModel)]="gender" id="gender1" #gender1 >
+                                <input type="radio" class="form-check-input" formControlName="gender" [value]="'Male'"
+                                    [(ngModel)]="gender" id="gender1" #gender1>
                                 <label class="form-check-label" for="gender1">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" formControlName="gender"
-                                    [value]="'Female'" [(ngModel)]="gender" id="gender2">
+                                <input type="radio" class="form-check-input" formControlName="gender" [value]="'Female'"
+                                    [(ngModel)]="gender" id="gender2">
                                 <label class="form-check-label" for="gender2">Female</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" formControlName="gender"
-                                    [value]="'Other'" [(ngModel)]="gender" id="gender3">
+                                <input type="radio" class="form-check-input" formControlName="gender" [value]="'Other'"
+                                    [(ngModel)]="gender" id="gender3">
                                 <label class="form-check-label" for="gender3">Other</label>
                             </div>
                         </div>
                         <div class="col-auto">
                             <br>
                             <div class="form-check form-check-inline mt-3">
-                                <input type="radio" class="form-check-input" formControlName="isMarried"
-                                    [value]="true" [(ngModel)]="isMarried" id="inlineRadio1" >
+                                <input type="radio" class="form-check-input" formControlName="isMarried" [value]="true"
+                                    [(ngModel)]="isMarried" id="inlineRadio1">
                                 <label class="form-check-label" for="inlineRadio1">Married</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" formControlName="isMarried"
-                                    [value]="false" [(ngModel)]="isMarried" id="inlineRadio2">
+                                <input type="radio" class="form-check-input" formControlName="isMarried" [value]="false"
+                                    [(ngModel)]="isMarried" id="inlineRadio2">
                                 <label class="form-check-label" for="inlineRadio2">Unmarried</label>
                             </div>
                         </div>
-                        
+
 
                         <div class="col-auto">
                             <br>

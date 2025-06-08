@@ -8,14 +8,14 @@
     
     <input [formControl]="control" [type]="type" class="form-control" [id]="elementId" aria-describedby="emailHelp"
         [placeholder]="placeholder" #childInput>
-        <!-- <ng-template  ngIf="control.dirty && control.touched"> -->
+        <!-- <ng-container  ngIf="control.dirty && control.touched"> -->
 
             <p class="alert-danger" *ngIf="control.dirty && control.touched && control.errors?.['required']">
                 Required field
             </p>
             <p class="alert-danger" *ngIf="control.dirty && control.touched && control.errors?.['email']">
                 Please enter correct email
-            </p>
-            
-        <!-- </ng-template> -->
+            </p>  
+                      
+        <!-- </ng-container> -->
 </ng-container>

@@ -82,12 +82,36 @@
                             <label for="password">Password <span class="text-danger"> *</span></label>
                             <input type="password" class="form-control" formControlName="password"
                                 aria-describedby="emailHelp" placeholder="Password">
-                            <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['required']
-                                && formGroupUserDataForm.controls.password.dirty
-                                && formGroupUserDataForm.controls.password.touched
-                                ">
-                                Password required field
-                            </p>
+                            <ng-container *ngIf="formGroupUserDataForm.controls.password.dirty
+                                && formGroupUserDataForm.controls.password.touched 
+                                && formGroupUserDataForm.controls.password.errors?.['passwordComplexity']">
+
+                                <!-- <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['pattern']">
+                                    Password suggesion like "Abc@1234"
+                                </p>
+                                <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['minlength']">
+                                    Minimum length is 8 characters
+                                </p> -->
+                                <p class="alert-danger" *ngIf="formGroupUserDataForm.controls.password.errors?.['required']">
+                                    Password required field
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasMinLength">
+                                    Password must be at least 8 characters long
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasUpperCase">
+                                    Password must be at least one uppercase letter
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasLowerCase">
+                                    Password must be at least one lowercase letter
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasNumber">
+                                    Password must be at least a number
+                                </p>
+                                <p class="alert-danger" *ngIf="!formGroupUserDataForm.controls.password.errors?.['passwordComplexity'].hasSpecialChar">
+                                    Password must be at least a special character
+                                </p>
+
+                            </ng-container>
                         </div>
                         <div class="col-auto">
                             <label for="birthDate">DOB</label>

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiUserService } from 'src/app/services/api-user.service';
+import { passwordComplexityValidator } from 'src/app/services/passwordComplexityValidator';
 import { WaitingService } from 'src/app/services/waiting.service';
 import { ModelComponent } from 'src/app/shared/model/model.component';
 // import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -33,7 +34,10 @@ export class EditComponent implements OnInit {
   designationId = new FormControl<number>(0, Validators.required);
   emailId = new FormControl<string | null>('');
   mobile = new FormControl<string | null>('',Validators.maxLength(10));
-  password = new FormControl<string>('', Validators.required);
+  password = new FormControl<string>('', [
+    Validators.required, 
+    passwordComplexityValidator()
+  ]);
   isMarried = new FormControl<boolean>(false);
   gender = new FormControl<string | null>("");
   birthDate = new FormControl<Date | null>(new Date);

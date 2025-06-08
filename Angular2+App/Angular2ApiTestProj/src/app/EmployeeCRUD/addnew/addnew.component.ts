@@ -4,6 +4,7 @@ import { ApiUserService } from 'src/app/services/api-user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ModelComponent } from 'src/app/shared/model/model.component';
 import { WaitingService } from 'src/app/services/waiting.service';
+import { passwordComplexityValidator } from 'src/app/services/passwordComplexityValidator';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { WaitingService } from 'src/app/services/waiting.service';
   templateUrl: './addnew.component.html',
   styleUrls: ['./addnew.component.css']
 })
-export class AddnewComponent implements OnInit,AfterViewInit {
+export class AddnewComponent implements OnInit, AfterViewInit {
 
   @ViewChild(ModelComponent) modelComponent!: ModelComponent
 
@@ -28,8 +29,18 @@ export class AddnewComponent implements OnInit,AfterViewInit {
   designationId = new FormControl<number>(0, Validators.required);
   // emailId = new FormControl<string | null>('');
   emailId = new FormControl<string>('', Validators.email);
-  mobile = new FormControl<string | null>('', Validators.maxLength(10));
-  password = new FormControl<string>('', Validators.required);
+  mobile = new FormControl<string | null>('', 
+    [Validators.maxLength(10), 
+    Validators.minLength(10), 
+    Validators.pattern(/^[0-9]+$/)
+  ]);
+  password = new FormControl<string>('', [
+    Validators.required,
+    passwordComplexityValidator(),
+    // Validators.minLength(8),
+    // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)
+  ]);
+
   isMarried = new FormControl<boolean>(true, Validators.required);
   gender = new FormControl<string>("Male", Validators.required);
   birthDate = new FormControl<Date | null>(new Date);
@@ -61,13 +72,13 @@ export class AddnewComponent implements OnInit,AfterViewInit {
     console.log('AddnewComponent loaded')
   }
 
-  ngOnInit(): void {    
-    this.fn_deptList()    
+  ngOnInit(): void {
+    this.fn_deptList()
   }
   ngAfterViewInit(): void {
     // this.maleRadio.nativeElement.checked = true;
-     this.formGroupUserDataForm.get('isMarried')?.setValue(true);
-     this.formGroupUserDataForm.get('gender')?.setValue('Male');
+    this.formGroupUserDataForm.get('isMarried')?.setValue(true);
+    this.formGroupUserDataForm.get('gender')?.setValue('Male');
   }
 
 
@@ -187,5 +198,7 @@ export class AddnewComponent implements OnInit,AfterViewInit {
     this.modelComponent.typeMsg = typeMsg
     this.modelComponent.fn_show_model()
   }
+
+  
 
 }
