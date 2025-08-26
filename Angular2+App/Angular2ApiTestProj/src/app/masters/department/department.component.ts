@@ -5,6 +5,9 @@ import { ApiUserService } from 'src/app/services/api-user.service';
 import { WaitingService } from 'src/app/services/waiting.service';
 import { InputComponent } from 'src/app/shared/input/input.component';
 import { ModelComponent } from 'src/app/shared/model/model.component';
+import * as DepartmentActions from 'src/app/ngrxutility/store/department/department.actions';
+import { Store } from '@ngrx/store';
+import { selectDepartmentDataLoaded, selectDepartmentId, selectDepartmentList, selectDepartmentName } from 'src/app/ngrxutility/store/department/department.selectors';
 
 @Component({
   selector: 'app-department',
@@ -32,6 +35,9 @@ export class DepartmentComponent {
   pageSize: number = 50;
   pageNo: number = 1;
 
+  deptLoaded: boolean = false;
+  deptLoading: boolean = false;
+
   id = new FormControl(0);
   departmentName = new FormControl<string>('', Validators.required);
 
@@ -43,20 +49,34 @@ export class DepartmentComponent {
 
 
   constructor(private serviceUserApiService: ApiUserService, private formBuilder: FormBuilder,
-    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService) {
+    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService, private store: Store) {
 
   }
 
 
   ngOnInit(): void {
-    this.fn_loadData();
+
+    this.store.select(selectDepartmentDataLoaded).subscribe(dataLoaded => {
+      this.deptLoaded = dataLoaded;
+    })
+
+    let id_ = 0
+    this.store.select(selectDepartmentId).subscribe(id => {
+      id_ = id;
+    })
+
+    let name_ = ""
+    this.store.select(selectDepartmentName).subscribe(name => {
+      name_ = name;
+    })
+
+    this.fn_loadData(0, id_, name_);
 
   }
 
+  fn_loadData(pageNo: number = 0, id: number = 0, departmentName: string = "") {
 
-
-  fn_loadData() {
-    this.fn_UserList(this.pageNo);
+    this.fn_UserList(this.pageNo, id, departmentName);
   }
 
   fn_PageChange(pageNo: number) {
@@ -66,46 +86,64 @@ export class DepartmentComponent {
 
 
 
-  fn_UserList(pageNo: number, departmentName: string = "") {
+  fn_UserListSearch(pageNo: number, id: number = 0, departmentName: string = "") {
+    this.deptLoaded = false;
+    this.deptLoading = false;
+    this.fn_UserList(pageNo, id, departmentName);
+  }
+  fn_UserList(pageNo: number, id: number = 0, departmentName: string = "") {
+
+
+
     this.waitingService.fn_showLoader()
 
     this.userList = [];
-    this.serviceUserApiService.getDeptWithPage(pageNo, this.pageSize, 0, 0, departmentName).subscribe({
-      next: (res) => {
-        //console.log("RKS:", JSON.stringify(res));        
-        this.userList = res;
-        // let totalRecords = Number(res.totalRecords);
-        this.pageNo = pageNo;
-        let totalRecords = 1;
-        this.pageNo = 1;
-        this.fn_Paging(totalRecords);
-        this.btn_save_text = 'Add New'
-      },
-      error: (err) => {
-        this.waitingService.fn_hideLoader()
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-        this.fn_showModel(err.error, "error")
-      },
-      complete: () => {
-        this.waitingService.fn_hideLoader()
-      }
+    // this.serviceUserApiService.getDeptWithPage(pageNo, this.pageSize, 0, 0, departmentName).subscribe({
+    //   next: (res) => {
+    //     //console.log("RKS:", JSON.stringify(res));        
+    //     this.userList = res;
+    //     // let totalRecords = Number(res.totalRecords);
+    //     this.pageNo = pageNo;
+    //     let totalRecords = 1;
+    //     this.pageNo = 1;
+    //     this.fn_Paging(totalRecords);
+    //     this.btn_save_text = 'Add New'
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //     this.fn_showModel(err.error, "error")
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // })
+
+
+    this.store.dispatch(DepartmentActions.loadDepartmentRequest({ dataLoaded: this.deptLoaded, dataLoading: this.deptLoading, id: id, departmentName: departmentName }));
+
+    this.store.select(selectDepartmentList).subscribe(res => {
+      ;
+      this.userList = res;
+      this.waitingService.fn_hideLoader()
+      // this.cdr.detectChanges();
     })
 
 
   }
 
-  fn_Paging(totalRecords: number) {    
+  fn_Paging(totalRecords: number) {
     this.pageQty = Math.ceil(totalRecords / this.pageSize);
   }
 
   fn_SaveData() {
 
-    
+
 
     //add waiting cursonr
     this.waitingService.fn_showLoader()
@@ -116,9 +154,9 @@ export class DepartmentComponent {
       // this.formGroupUserDataForm.value.modifieldOn = curDate;
       this.serviceUserApiService.putDept(Number(this.formGroupUserDataForm.value.id), this.formGroupUserDataForm.value).subscribe({
         next: (res) => {
-          
+
           console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserList(this.pageNo);
+          this.fn_UserListSearch(this.pageNo);
           this.fn_reset()
         },
         error: (err) => {
@@ -130,7 +168,7 @@ export class DepartmentComponent {
           if (err.status === 401) {
             this.router.navigateByUrl(`/unauthenticate`)
           }
-          
+
           this.fn_showModel(JSON.stringify(err.error), "error")
         },
         complete: () => {
@@ -151,9 +189,9 @@ export class DepartmentComponent {
 
       this.formGroupUserDataForm.value.id = 0
       this.serviceUserApiService.postDept(this.formGroupUserDataForm.value).subscribe({
-        next: (res) => {          
+        next: (res) => {
           //console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserList(this.pageNo);
+          this.fn_UserListSearch(this.pageNo);
           this.fn_reset()
         },
         error: (err) => {
@@ -189,7 +227,7 @@ export class DepartmentComponent {
     this.formGroupUserDataForm.get('departmentName')?.setValue('');
   }
 
-  fn_FillDataToUpdate(uid: number) {    
+  fn_FillDataToUpdate(uid: number) {
     //add waiting cursor
     this.waitingService.fn_showLoader()
 
@@ -198,7 +236,7 @@ export class DepartmentComponent {
     // this.formGroupUserDataForm.value.modifieldOn = curDate;
 
     this.serviceUserApiService.getDept(uid).subscribe({
-      next: (res) => {        
+      next: (res) => {
         //console.log("RKS:Post:", JSON.stringify(res));             
 
         this.formGroupUserDataForm.get('id')?.setValue(res.id)
@@ -229,7 +267,7 @@ export class DepartmentComponent {
   }
 
   fn_DeleteRecord(uid: number) {
-    
+
     if (!confirm("Are you sure to delete record?")) {
       return;
     }
@@ -244,8 +282,8 @@ export class DepartmentComponent {
 
     this.serviceUserApiService.deleteDept(uid).subscribe({
       next: (res) => {
-        this.fn_UserList(this.pageNo);
-        
+        this.fn_UserListSearch(this.pageNo);
+
       },
       error: (err) => {
         this.waitingService.fn_hideLoader()
@@ -268,7 +306,7 @@ export class DepartmentComponent {
   }
 
   fn_showModel(msg: string, typeMsg: string) {
-    
+
     this.modelComponent.message = msg
     this.modelComponent.typeMsg = typeMsg
     this.modelComponent.fn_show_model()

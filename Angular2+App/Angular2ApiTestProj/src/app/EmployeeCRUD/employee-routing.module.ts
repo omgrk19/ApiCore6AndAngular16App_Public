@@ -9,6 +9,7 @@ import { UpdateUserImageComponent } from './UpdateUserImage/UpdateUserImage.comp
 import { UpdateUserDocComponent } from './UpdateUserDoc/UpdateUserDoc.component';
 import { UpdateUserVideoComponent } from './UpdateUserVideo/UpdateUserVideo.component';
 import { customChieldAuthenticationGuard } from '../authguard/custom-chield-authentication.guard';
+import { List3Component } from './list3/list3.component';
 
 
 const routes: Routes = [
@@ -17,9 +18,13 @@ const routes: Routes = [
     component: EmployeeComponent,
     canActivateChild: [customChieldAuthenticationGuard],
     children: [
+      // {
+      //   path: 'list',
+      //   component: List2Component
+      // },
       {
         path: 'list',
-        component: List2Component
+        component: List3Component
       },
       {
         path: 'add',

@@ -13,7 +13,7 @@
                         <div class="col-auto">
                             <label for="designationName">Designation Name <span class="text-danger"> *</span></label>
                             <app-input [control]="designationName" type="text" placeholder="Designation Name"
-                            elementId="designationName"></app-input>
+                                elementId="designationName"></app-input>
                             <!-- <input type="text" class="form-control" formControlName="designationName" #tvDesignationName
                                 aria-describedby="emailHelp" placeholder="Designation Name">
                             <p class="alert-danger" *ngIf=" 
@@ -30,7 +30,7 @@
                             <br>
                             <button type="submit" [disabled]="userCompleteForm.invalid" #tv_btn_save value="Save"
                                 class="btn btn-primary mt-2 disabled:opacity-100">{{ btn_save_text }}</button>
-                          
+
                             <button type="button" class="btn btn-primary mt-2" (click)="fn_reset()">Reset</button>
                             <span *ngIf="errorMessage.length>0" class="alert-danger">{{errorMessage}}</span>
                         </div>
@@ -51,13 +51,13 @@
                             <!-- <label for="FirstName">Search Name</label> -->
                             <br>
                             <input type="search" class="form-control" #desigName aria-describedby="emailHelp"
-                                placeholder="Search designation" (keyup)="fn_UserList(1, desigName.value)">
+                                placeholder="Search designation" (keyup)="fn_UserListSearch(1,0, desigName.value)">
 
                         </div>
 
                         <div class="col-auto">
                             <br>
-                            <button type="button" (click)="fn_UserList(1, desigName.value)"
+                            <button type="button" (click)="fn_UserListSearch(1,0, desigName.value)"
                                 class="btn btn-primary">Search</button>
                         </div>
                     </div>

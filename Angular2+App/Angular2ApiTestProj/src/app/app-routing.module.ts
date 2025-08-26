@@ -17,6 +17,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { UnAuthorizeComponent } from './un-authorize/un-authorize.component';
 import { UnAuthenticateComponent } from './un-authenticate/un-authenticate.component';
 import { customAuthenticationGuard } from './authguard/custom-authentication.guard';
+// import { ShowcouterComponent } from './ngrxutil/showcouter/showcouter.component';
+// import { EmployeeTestListComponent } from './ngrxutil/employee/employeetest.component';
+
 
 
 const routes: Routes = [  
@@ -35,6 +38,14 @@ const routes: Routes = [
   //   pathMatch:'full'
   // },
   
+  // {
+  //   path:'showcounter',
+  //   component: ShowcouterComponent
+  // },
+  // {
+  //   path:'employeetest',
+  //   component: EmployeeTestListComponent
+  // },
   {
     path:'testmr',
     loadChildren:()=> import('./employeetest/testmr.module').then(m => m.TestmrModule),

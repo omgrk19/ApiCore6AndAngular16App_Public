@@ -39,6 +39,7 @@ export class List2Component implements OnInit {
   userId = new FormControl(0);
   firstName = new FormControl<string>('', Validators.required);
   lastName = new FormControl<string>('');
+  departmentId = new FormControl<number | null>(0);
   designationId = new FormControl<number | null>(0);
   emailId = new FormControl<string | null>('');
   mobile = new FormControl<string | null>('');
@@ -53,6 +54,7 @@ export class List2Component implements OnInit {
     // userId: this.userId,
     firstName: this.firstName,
     // lastName: this.lastName,
+    departmentId: this.departmentId,
     designationId: this.designationId,
     // emailId: this.emailId,
     mobile: this.mobile,
@@ -163,7 +165,7 @@ export class List2Component implements OnInit {
     this.serviceUserApiService.getEmployeeList(pageNo, this.pageSize, id, departmentId, designationId, firstName, mobile).subscribe({
       next: (res) => {
 
-        //console.log("RKS:", JSON.stringify(res));        
+        console.log("RKS:", JSON.stringify(res));        
         // this.userList = res.usersDetails_List;
         this.userList = res.employeeDetails_List;
         let totalRecords = Number(res.totalRecords);

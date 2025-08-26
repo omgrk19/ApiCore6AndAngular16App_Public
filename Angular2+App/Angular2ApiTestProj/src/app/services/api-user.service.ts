@@ -27,7 +27,7 @@ export class ApiUserService {
     return this.http.get<any>(`${this.cBaseUrl}/Employee/${id}`);
   }
   getEmployeeList(pageNo: number, pageSize: number, id: any = 0, departmentId: any = 0, designationId: any = 0, firstName: any = "", mobile: any = "") {
-
+    // debugger;
     return this.http.get<any>(`${this.cBaseUrl}/Employee?pageNo=${pageNo}&pageSize=${pageSize}&id=${id}&firstName=${firstName}
       &mobile=${mobile}&departmentId=${departmentId}&designationId=${designationId}`
     );

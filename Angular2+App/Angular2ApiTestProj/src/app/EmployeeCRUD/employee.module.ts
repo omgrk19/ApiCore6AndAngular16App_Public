@@ -13,6 +13,8 @@ import { UpdateUserDocComponent } from './UpdateUserDoc/UpdateUserDoc.component'
 import { UpdateUserVideoComponent } from './UpdateUserVideo/UpdateUserVideo.component';
 import { SharedModule } from '../shared/shared.module';
 import { GenderPipe } from '../pipes/gender.pipe';
+import { List3Component } from './list3/list3.component';
+
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { GenderPipe } from '../pipes/gender.pipe';
     UpdateUserImageComponent,
     UpdateUserDocComponent,
     UpdateUserVideoComponent,
+    List3Component,
+
   ],
   imports: [
     CommonModule,

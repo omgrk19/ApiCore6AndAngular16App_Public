@@ -15,10 +15,11 @@ export class HeaderInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
+    //debugger;
     console.log("Interceptor-log: " + request.url)
 
     if (localStorage.length > 0) {
-
+ 
       var data = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('localkey'))))
       let auth_token = data.token;
 

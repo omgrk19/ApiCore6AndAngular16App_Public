@@ -9,7 +9,7 @@
             <a #mobileCollapse (click)="fn_mobileCollapse_toggle()" class="mobile-menu"
                 id="mobile-collapse"><span></span></a>
         </div>
-        <div class="navbar-content scroll-div">
+        <div class="navbar-content scroll-div" style="overflow-y: auto;">
             <ul class="nav pcoded-inner-navbar">
                 <li class="nav-item pcoded-menu-caption">
                     <label>Navigation</label>
@@ -85,6 +85,8 @@
                 <li class="nav-item">
                     <a routerLink="/employee" (click)="fn_navClickOperation()" class="nav-link"><span class="pcoded-micon"><i
                                 class="feather icon-box"></i></span><span class="pcoded-mtext">Employee </span></a>
+                    <!-- <a routerLink="/employeetest"  class="nav-link"><span class="pcoded-micon"><i
+                                class="feather icon-box"></i></span><span class="pcoded-mtext">Employee test </span></a> -->
                 </li>
 
                 <!-- <li class="nav-item">

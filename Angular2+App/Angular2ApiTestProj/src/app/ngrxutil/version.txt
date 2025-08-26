@@ -1,0 +1,25 @@
+NgRx v16 was specifically released to be compatible with Angular 16. Here are the key packages:
+
+NgRx Package	Version for Angular 16
+@ngrx/store	^16.0.0
+@ngrx/effects	^16.0.0
+@ngrx/entity	^16.0.0
+@ngrx/store-devtools	^16.0.0
+@ngrx/router-store	^16.0.0
+@ngrx/component-store	^16.0.0
+
+Show Counter implimentation link 
+    https://www.youtube.com/watch?v=YEFy9TapuVs&list=PLfyWdpsiUiPC7bHmDDDM6gGgfo3mgMCAC&index=4
+
+commads
+----------------
+ng add @ngrx/store@16
+ng add @ngrx/effects@16
+ng add @ngrx/entity@16
+ng add @ngrx/store-devtools@16
+or
+npm install @ngrx/store@16 @ngrx/effects@16 @ngrx/entity@16 @ngrx/store-devtools@16
+-----------------
+more advance
+ng add @ngrx/component-store@16
+ng add @ngrx/router-store@16

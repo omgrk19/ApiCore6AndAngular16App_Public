@@ -1,10 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ApiUserService } from 'src/app/services/api-user.service';
 import { WaitingService } from 'src/app/services/waiting.service';
 import { InputComponent } from 'src/app/shared/input/input.component';
 import { ModelComponent } from 'src/app/shared/model/model.component';
+// import * as DepartmentActions from 'src/app/ngrxutility/store/department/department.actions';
+import * as DesignationActions from 'src/app/ngrxutility/store/designation/designation.actions';
+import { selectDesignationDataLoaded, selectDesignationDataLoading, selectDesignationId, selectDesignationList, selectDesignationName } from 'src/app/ngrxutility/store/designation/designation.selectors';
 
 @Component({
   selector: 'app-designation',
@@ -15,7 +19,7 @@ export class DesignationComponent {
 
   @ViewChild("tvDesignationName") _tvDesignationName!: ElementRef
   @ViewChild("tv_btn_save") _tv_btn_save!: ElementRef
-  
+
   @ViewChild(InputComponent) inputComponent!: InputComponent
   @ViewChild(ModelComponent) modelComponent!: ModelComponent
 
@@ -31,6 +35,9 @@ export class DesignationComponent {
   pageSize: number = 50;
   pageNo: number = 1;
 
+  dataLoaded: boolean = false;
+  dataLoading: boolean = false;
+
   id = new FormControl(0);
   designationName = new FormControl<string>('', Validators.required);
 
@@ -42,18 +49,37 @@ export class DesignationComponent {
 
 
   constructor(private serviceUserApiService: ApiUserService, private formBuilder: FormBuilder,
-    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService) {
+    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService, private store: Store) {
 
   }
 
 
   ngOnInit(): void {
-    this.fn_loadData();
+
+    this.store.select(selectDesignationDataLoaded).subscribe(dataLoaded => {
+      this.dataLoaded = dataLoaded;
+    })
+
+    this.store.select(selectDesignationDataLoading).subscribe(dataLoading => {
+      this.dataLoading = dataLoading;
+    })
+
+    let id_ = 0
+    this.store.select(selectDesignationId).subscribe(id => {
+      id_ = id;
+    })
+    let name_ = ""
+    this.store.select(selectDesignationName).subscribe(name => {
+      name_ = name;
+    })
+
+
+    this.fn_loadData(1, id_, name_);
 
   }
 
-  fn_loadData() {
-    this.fn_UserList(this.pageNo);
+  fn_loadData(pageNo: number = 0, id: number = 0, designationName: string = "") {
+    this.fn_UserList(this.pageNo, id, designationName);
 
   }
 
@@ -65,42 +91,57 @@ export class DesignationComponent {
 
 
 
-  fn_UserList(pageNo: number, designationName: string = "") {
+  fn_UserListSearch(pageNo: number, id: number = 0, designationName: string = "") {
+    this.dataLoaded = false;
+    this.dataLoading = false;
+    this.fn_UserList(pageNo, id, designationName);
+  }
+  fn_UserList(pageNo: number, id: number = 0, designationName: string = "") {
     // debugger
     this.waitingService.fn_showLoader()
 
     this.userList = [];
-    this.serviceUserApiService.getDesigsWithPage(pageNo, this.pageSize, 0, 0, designationName).subscribe({
-      next: (res) => {
-        console.log("RKS:", JSON.stringify(res));
-        // debugger;
-        this.userList = res;
-        // let totalRecords = Number(res.totalRecords);
-        this.pageNo = pageNo;
-        let totalRecords = 1;
-        this.pageNo = 1;
-        this.fn_Paging(totalRecords);
-        this.btn_save_text = 'Add New'
-      },
-      error: (err) => {
-        this.waitingService.fn_hideLoader()
+    // this.serviceUserApiService.getDesigsWithPage(pageNo, this.pageSize, 0, 0, designationName).subscribe({
+    //   next: (res) => {
+    //     console.log("RKS:", JSON.stringify(res));
+    //     // debugger;
+    //     this.userList = res;
+    //     // let totalRecords = Number(res.totalRecords);
+    //     this.pageNo = pageNo;
+    //     let totalRecords = 1;
+    //     this.pageNo = 1;
+    //     this.fn_Paging(totalRecords);
+    //     this.btn_save_text = 'Add New'
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
 
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-        this.router.navigate(['/unauthorize'], {
-          relativeTo: this.route,
-          queryParams: {
-            msg: err.error
-          }
-        })
-      },
-      complete: () => {
-        this.waitingService.fn_hideLoader()
-      }
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //     this.router.navigate(['/unauthorize'], {
+    //       relativeTo: this.route,
+    //       queryParams: {
+    //         msg: err.error
+    //       }
+    //     })
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // })
+
+
+    this.store.dispatch(DesignationActions.loadDesignationRequest({ dataLoaded: this.dataLoaded, dataLoading: this.dataLoading, id: id, designationName: designationName }));
+
+    this.store.select(selectDesignationList).subscribe(res => {
+      ;
+      this.userList = res;
+      this.waitingService.fn_hideLoader()
+      // this.cdr.detectChanges();
     })
 
 
@@ -127,8 +168,8 @@ export class DesignationComponent {
           console.log("RKS:Post:", JSON.stringify(res));
           this.fn_UserList(this.pageNo);
           this.formGroupUserDataForm.reset();
-          this.fn_reset()          
-          
+          this.fn_reset()
+
         },
         error: (err) => {
           this.waitingService.fn_hideLoader()
@@ -213,7 +254,7 @@ export class DesignationComponent {
   }
 
   fn_FillDataToUpdate(uid: number) {
-    
+
     //add waiting cursor
     this.waitingService.fn_showLoader()
 
@@ -223,15 +264,15 @@ export class DesignationComponent {
 
     // this.serviceUserApiService.getDesig(uid).subscribe(res => {
     this.serviceUserApiService.getDesig(uid).subscribe({
-      next: (res) => {        
+      next: (res) => {
         //console.log("RKS:Post:", JSON.stringify(res));             
 
         this.formGroupUserDataForm.get('id')?.setValue(res.id)
         this.formGroupUserDataForm.get('designationName')?.setValue(res.designationName);
-        
+
         this.inputComponent.fn_focus("designationName")
         this._tv_btn_save.nativeElement.value = "Update";
-        this.btn_save_text = "Update"        
+        this.btn_save_text = "Update"
       },
       error: (err) => {
         this.waitingService.fn_hideLoader()
@@ -273,10 +314,10 @@ export class DesignationComponent {
     // this.formGroupUserDataForm.value.modifieldOn = curDate;
 
     this.serviceUserApiService.deleteDesig(uid).subscribe({
-      next: (res) => {        
-        this.fn_UserList(this.pageNo);        
-      },      
-      error: (err) => {        
+      next: (res) => {
+        this.fn_UserList(this.pageNo);
+      },
+      error: (err) => {
         this.waitingService.fn_hideLoader()
 
         if (err.status === 403) {
@@ -303,7 +344,7 @@ export class DesignationComponent {
   }
 
   fn_showModel(msg: string, typeMsg: string) {
-    
+
     this.modelComponent.message = msg
     this.modelComponent.typeMsg = typeMsg
     this.modelComponent.fn_show_model()

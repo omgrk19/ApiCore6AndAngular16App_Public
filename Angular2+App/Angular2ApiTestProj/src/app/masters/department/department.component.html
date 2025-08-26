@@ -51,13 +51,13 @@
                             <!-- <label for="FirstName">Search Name</label> -->
                             <br>
                             <input type="search" class="form-control" #desigName aria-describedby="emailHelp"
-                                placeholder="Search designation" (keyup)="fn_UserList(1, desigName.value)">
+                                placeholder="Search designation" (keyup)="fn_UserListSearch(1,0, desigName.value)">
 
                         </div>
 
                         <div class="col-auto">
                             <br>
-                            <button type="button" (click)="fn_UserList(1, desigName.value)"
+                            <button type="button" (click)="fn_UserListSearch(1, 0, desigName.value)"
                                 class="btn btn-primary">Search</button>
                         </div>
                     </div>

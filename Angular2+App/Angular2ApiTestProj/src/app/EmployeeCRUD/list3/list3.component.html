@@ -1,0 +1,176 @@
+<!-- <app-page-title [pageTitleName]="pageTitle"></app-page-title> -->
+<!-- [ Main Content Body ] start -->
+<div class="row">
+    <!-- sessions-section start -->
+    <div class="col-xl-12 col-md-6">
+        <div class="card table-card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-auto">
+                        <h4>Employee List 3</h4>
+                    </div>
+                    <div class="col-md-10">
+                        <!-- <button type="button" (click)="f_createnew()" class="btn btn-primary" style="float: right;">Add New
+                            User
+                            (Button)</button> -->
+                        <a routerLink="/employee/add" class="btn btn-primary" style="float: right;">Add New User </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <!-- <form> -->
+                <form [formGroup]="formGroupEmployee3FilterForm" #employee3CompleteForm="ngForm"
+                    (ngSubmit)="fn_fiterUserList()">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5><u>Filters</u></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="FirstName">Search Name</label>
+                            <input type="email" class="form-control" formControlName="firstName"
+                                aria-describedby="emailHelp" placeholder="Name">
+
+                        </div>
+                        <div class="col-auto">
+                            <label for="Mobile">Mobile Number</label>
+                            <input type="text" maxlength="10" class="form-control" formControlName="mobile"
+                                aria-describedby="mobileHelp" placeholder="Mobile Number">
+                        </div>
+                        <div class="col-auto">
+                            <label for="departmentId">Department</label>
+                            <select class="form-control" formControlName="departmentId" id="ddlDepartmentId" aria-describedby="emailHelp"
+                                #tvDepartmentId (change)="fn_desigList(tvDepartmentId.value)" placeholder="Department">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let dept of deptList" value="{{ dept.id }}">{{
+                                    dept.departmentName }}</option>
+
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <label for="designationId">Designation</label>
+                            <select class="form-control" formControlName="designationId" aria-describedby="emailHelp"
+                                placeholder="Designation">
+                                <option value="">-Select-</option>
+                                <option *ngFor="let desig of desigList" value="{{ desig.designationId }}">{{
+                                    desig.designationName }}</option>
+
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <br>
+                            <button type="submit" class="btn btn-primary mt-2">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body px-0 py-0">
+                <div class="table-responsive">
+                    <div class="session-scroll" style="height:478px;position:relative;">
+                        <table class="table table-hover m-b-0">
+                            <thead>
+                                <tr>
+                                    <th><span>Sr.No.</span></th>
+                                    <th><span>User ID.</span></th>
+                                    <th><span> Name</span></th>
+                                    <th><span> DOB</span></th>
+                                    <th><span> Mobile</span></th>
+                                    <th><span> Email</span></th>
+                                    <th><span> Male</span></th>
+                                    <th><span> Department</span></th>
+                                    <th><span> Degination</span></th>
+                                    <th><span> Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr *ngFor="let data of userList; let i = index"> -->
+                                <!-- <tr *ngFor="let emp of employeeInfo.employeeDetails_List"> -->
+                                <tr *ngIf="error">
+                                    <td colspan="10">
+                                        {{error}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let data of employeeInfo.employeeDetails_List;">
+                                    <td>{{ data.rowNo }}</td>
+                                    <td>{{ data.userId }}</td>
+                                    <!-- <td><span>{{ data.firstName | gender: data.isMaleorFemale }} </span> <span>{{ data.lastName }}</span></td> -->
+                                    <td><span>{{ data.firstName }} </span> <span>{{ data.lastName }}</span></td>
+                                    <td>{{ data.birthDate | date : 'dd-MMM-yyyy' }}</td>
+                                    <td>{{ data.mobile }}</td>
+                                    <td>{{ data.emailId }}</td>
+                                    <!-- <td>{{ data.isMaleorFemale }}</td> -->
+                                    <td>{{ data.gender }}</td>
+                                    <td>{{ data.departmentName }}</td>
+                                    <td>{{ data.designationName }}</td>
+                                    <td>
+                                        <a routerLink="/employee/edit/{{data.userId}}"><i
+                                                class="fa fa-pen-square"></i></a>
+                                        &nbsp;
+                                        <a (click)="fn_NavigateToView(data.userId)"><i class="fa fa-eye"></i></a> &nbsp;
+                                        <a (click)="fn_DeleteRecord(data.userId)"><i class="fa fa-trash"></i></a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="Page navigation example" [ngStyle]="{'display':pageQty < 2 ? 'none':''}">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(1)" aria-label="First"><span
+                                aria-hidden="true">1</span><span class="sr-only">First</span></a></li>
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageNo-1)"
+                            aria-label="Previous"><span aria-hidden="true">«</span><span
+                                class="sr-only">Previous</span></a></li>
+
+                    <!-- <li *ngFor="let num of [].constructor(pageQty>dispPageQty?dispPageQty:pageQty);let i=index"
+                        [ngClass]="(i + (pageNo>dispPageQty? pageNo-dispPageQty+1 : 1))===pageNo?'active':''" class="page-item"><a class="page-link"
+                            (click)="fn_PageChange(i+1)">
+                            {{ i + (pageNo>dispPageQty? pageNo-dispPageQty+1 : 1) }}
+                        </a>
+                    </li> -->
+
+                    <li class="page-item">
+                        <a class="page-link" style="padding:0;">
+                            <input #tvCustomPageNo type="number" value="{{pageNo}}"
+                                style="width: 53px; height: 33px;padding: 0 0 0 10px;"
+                                (change)="fn_PageChange(+tvCustomPageNo.value)">
+                        </a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageNo+1)" aria-label="Next"><span
+                                aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+
+                    <li class="page-item"><a class="page-link" (click)="fn_PageChange(pageQty)" aria-label="Last"><span
+                                aria-hidden="true">{{(pageQty)}}</span><span class="sr-only">Last</span></a></li>
+
+                    <li class="page-item"><a class="page-link" aria-label="Page Size"><span aria-hidden="true">Page
+                                Size: </span><span class="sr-only">Page Size</span></a></li>
+                    <li class="page-item">
+                        <a class="page-link" style="padding:0;">
+
+                            <select style="height: 33px;padding: 0 0 0 10px;" (change)="fn_PageSizeChange($event)"
+                                aria-describedby="emailHelp" id="selPageSizeList" #selPageSizeList placeholder="Designation">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+
+                        </a>
+                    </li>
+
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content Body ] end -->
+
+<!-- Model -->
+<app-model></app-model>

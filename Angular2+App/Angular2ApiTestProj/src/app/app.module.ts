@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +32,29 @@ import { HeaderModule } from './header/header.module';
 import { GenderPipe } from './pipes/gender.pipe';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { ForesponseInterceptor } from './interceptors/foresponse.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { employeeReducer } from './ngrxutility/store/employee/employee.reducer';
+import { EmployeeEffects } from './ngrxutility/store/employee/employee.effects';
+import { DepartmentEffects } from './ngrxutility/store/department/department.effects';
+import { departmentReducer } from './ngrxutility/store/department/department.reducer';
+import { ManageDesignationEffects } from './ngrxutility/store/manageDesignation/manageDesignation.effects';
+import { manageDesignationReducer } from './ngrxutility/store/manageDesignation/manageDesignation.reducer';
+import { designationReducer } from './ngrxutility/store/designation/designation.reducer';
+import { DesignationEffects } from './ngrxutility/store/designation/designation.effects';
+import { ManageDesignationEmpEffects } from './ngrxutility/store/manageDesignationEmp/manageDesignationEmp.effects';
+import { manageDesignationEmpReducer } from './ngrxutility/store/manageDesignationEmp/manageDesignationEmp.reducer';
+// // import { ShowcouterComponent } from './ngrxutil/showcouter/showcouter.component';
+// // import { CounterbuttonComponent } from './ngrxutil/showcouter/counterbutton/counterbutton.component';
+// // import { CounterdisplayComponent } from './ngrxutil/showcouter/counterdisplay/counterdisplay.component';
+// // import { counterReducer } from './ngrxutil/store/counter.reducer';
+// import { EmployeeTestListComponent } from './ngrxutil/employee/employeetest.component';
+// // import { rootReducer } from './ngrxutil/store/f-reducers';
+// import { employeeReducer } from './ngrxutil/store/employee/employee.reducer';
+// import { EmployeeEffects } from './ngrxutil/store/employee/employee.effects';
+
+
 
 //import { ProfileComponent } from './header/profile/profile.component';
 
@@ -63,10 +86,12 @@ import { ForesponseInterceptor } from './interceptors/foresponse.interceptor';
     RegistrationComponent,
     NotFoundComponent,
     UnAuthorizeComponent,
-    UnAuthenticateComponent,
-    
-    
+    UnAuthenticateComponent,    
+    // ShowcouterComponent,
+    // CounterbuttonComponent,
+    // CounterdisplayComponent,
     //ProfileComponent
+    // EmployeeTestListComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +103,15 @@ import { ForesponseInterceptor } from './interceptors/foresponse.interceptor';
     AppRoutingModule,
     SharedModule, 
     HeaderModule,
-    GenderPipe   
+    GenderPipe,
+    // StoreModule.forRoot({counter: counterReducer}),    
+    // StoreModule.forRoot(rootReducer), 
+    StoreModule.forRoot({ employees: employeeReducer, departments: departmentReducer,designations: designationReducer, 
+      manageDesignations: manageDesignationReducer, manageDesignationEmps: manageDesignationEmpReducer}), 
+    
+    // EffectsModule.forRoot([]), 
+    EffectsModule.forRoot([EmployeeEffects, DepartmentEffects, DesignationEffects, ManageDesignationEffects, ManageDesignationEmpEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })   
   ],  
 
   providers: [
