@@ -45,6 +45,16 @@ import { designationReducer } from './ngrxutility/store/designation/designation.
 import { DesignationEffects } from './ngrxutility/store/designation/designation.effects';
 import { ManageDesignationEmpEffects } from './ngrxutility/store/manageDesignationEmp/manageDesignationEmp.effects';
 import { manageDesignationEmpReducer } from './ngrxutility/store/manageDesignationEmp/manageDesignationEmp.reducer';
+import { authFormsReducer } from './ngrxutility/store/authForms/authForms.reducer';
+import { AuthFormsEffects } from './ngrxutility/store/authForms/authForms.effects';
+import { authActionReducer } from './ngrxutility/store/authActions/authActions.reducer';
+import { AuthActionEffects } from './ngrxutility/store/authActions/authActions.effects';
+import { authManageFormActionReducer } from './ngrxutility/store/authManageFormActions/authManageFormActions.reducer';
+import { AuthManageFormActionEffects } from './ngrxutility/store/authManageFormActions/authManageFormActions.effects';
+import { authProfilesReducer } from './ngrxutility/store/authProfiles/authProfiles.reducer';
+import { AuthProfilesEffects } from './ngrxutility/store/authProfiles/authProfiles.effects';
+import { authManageProfileFormActReducer } from './ngrxutility/store/authManageProfileFormActions/authManageProfileFormAct.reducer';
+import { AuthManageProfileFormActEffects } from './ngrxutility/store/authManageProfileFormActions/authManageProfileFormAct.effects';
 // // import { ShowcouterComponent } from './ngrxutil/showcouter/showcouter.component';
 // // import { CounterbuttonComponent } from './ngrxutil/showcouter/counterbutton/counterbutton.component';
 // // import { CounterdisplayComponent } from './ngrxutil/showcouter/counterdisplay/counterdisplay.component';
@@ -107,10 +117,14 @@ import { manageDesignationEmpReducer } from './ngrxutility/store/manageDesignati
     // StoreModule.forRoot({counter: counterReducer}),    
     // StoreModule.forRoot(rootReducer), 
     StoreModule.forRoot({ employees: employeeReducer, departments: departmentReducer,designations: designationReducer, 
-      manageDesignations: manageDesignationReducer, manageDesignationEmps: manageDesignationEmpReducer}), 
+      manageDesignations: manageDesignationReducer, manageDesignationEmps: manageDesignationEmpReducer, 
+      authForms: authFormsReducer, authActions: authActionReducer, authManageFormActions: authManageFormActionReducer,
+      authProfiles: authProfilesReducer, authManageProfileFormActs: authManageProfileFormActReducer}), 
     
     // EffectsModule.forRoot([]), 
-    EffectsModule.forRoot([EmployeeEffects, DepartmentEffects, DesignationEffects, ManageDesignationEffects, ManageDesignationEmpEffects]),
+    EffectsModule.forRoot([EmployeeEffects, DepartmentEffects, DesignationEffects, ManageDesignationEffects, 
+      ManageDesignationEmpEffects, AuthFormsEffects, AuthActionEffects, AuthManageFormActionEffects, AuthProfilesEffects,
+      AuthManageProfileFormActEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })   
   ],  
 

@@ -13,7 +13,7 @@
 
                         <div class="col-auto">
                             <label for="formId">Form</label>
-                            <select class="form-control" formControlName="formId" aria-describedby="emailHelp"
+                            <select class="form-control" formControlName="formId" id="selFormId" aria-describedby="emailHelp"
                                 #tvFormId (change)="fn_UserList(1,tvFormId.value,tvActionId.value)" placeholder="">
                                 <option value="">-Select-</option>
                                 <option *ngFor="let form of formList" value="{{ form.formid }}">{{
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-auto">
                             <label for="actionId">Action</label>
-                            <select class="form-control" formControlName="actionId" aria-describedby="emailHelp"
+                            <select class="form-control" formControlName="actionId" id="selActionId" aria-describedby="emailHelp"
                             #tvActionId (change)="fn_UserList(1,tvFormId.value,tvActionId.value)" placeholder="">
                                 <option value="">-Select-</option>
                                 <option *ngFor="let adata of actionList" value="{{ adata.action }}">{{
@@ -71,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of userList; let i = index">
+                                <tr *ngFor="let data of formActionList; let i = index">
                                     <td>{{ (i+1) }}</td>
                                     <td>{{ data.formId }}</td>
                                     <td>{{ data.formName }}</td>

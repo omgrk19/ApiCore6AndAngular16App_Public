@@ -42,6 +42,43 @@ export interface IManageDesignation {
     designationName: string,
 }
 
+export interface IAuthForms {
+    id: number,
+    formid: string,
+    form_name: string,    
+    form_link: string,
+    model_id: string,
+    form_st: boolean,
+}
+
+export interface IAuthAction {
+    id: number,
+    action: string,    
+}
+
+export interface IAuthProfile {
+    id: number,
+    profileId: string,    
+    profile_Name: string,    
+    profile_Desc: string,    
+    profile_St: boolean,    
+}
+
+export interface IAuthManageFormAction {
+    id: number,
+    formName: string,    
+    formId: string,    
+    actionId: string,    
+}
+export interface IAuthManageProfileFormAct {
+    id: number,
+    profileName: string,    
+    formName: string,    
+    profileId: string,    
+    formId: string,    
+    actionId: string,    
+}
+
 // export interface IEmployeeState {
 //     employeeDetails_List: IEmployee[];
 //     totalRecords: number;

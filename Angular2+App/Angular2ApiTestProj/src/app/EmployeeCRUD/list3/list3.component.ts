@@ -106,7 +106,7 @@ export class List3Component implements OnInit {
   }
 
   fn_loadData() {
-     
+
 
 
     this.store.select(selectDepartmentDataLoaded).subscribe(loaded => {
