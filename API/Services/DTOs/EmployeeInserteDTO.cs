@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataModels.Models;
 
 namespace Services.DTOs
 {
@@ -27,5 +28,6 @@ namespace Services.DTOs
         public string? PhotoUrl { get; set; }
         public string? DocumentUrl { get; set; }
         public string? VideoUrl { get; set; }
+        
     }
 }

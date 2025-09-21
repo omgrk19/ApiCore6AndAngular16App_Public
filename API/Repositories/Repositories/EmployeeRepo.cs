@@ -6,15 +6,19 @@ using DataModels.DataUtilities;
 using DataModels.Models;
 using Repositories.Repositories.Interfaces;
 using DataModels.FilterModels;
+using AutoMapper;
 
 namespace Repositories.Repositories
 {
     public class EmployeeRepo : IEmployeeRepo
     {
         private readonly AppDbContext _context;
-        public EmployeeRepo(AppDbContext context)
+        private readonly IMapper _mapper;
+
+        public EmployeeRepo(AppDbContext context, IMapper mapper)
         {
             this._context = context;
+            _mapper = mapper;
         }
 
         public async Task<(int, string, Employee)> GetById(int id)
@@ -31,9 +35,11 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
+        //public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
+        public async Task<(int, string, Employee_Vm)> GetList(EmployeeFilter filter)
         {
-            usp_EmployeeDetails_Vm usp_EmployeeDetails_Vm = new usp_EmployeeDetails_Vm();
+            //usp_EmployeeDetails_Vm usp_EmployeeDetails_Vm = new usp_EmployeeDetails_Vm();
+            Employee_Vm employee_Vm = new Employee_Vm();
             try
             {
                 if (filter == null)
@@ -65,20 +71,21 @@ namespace Repositories.Repositories
                              where (Id > 0 ? x.UserId == Id : (true))
                              && (DeptId > 0 ? x.DepartmentId == DeptId : (true))
                              && (DesigId > 0 ? x.DesignationId == DesigId : (true))
-                             && (FirstName != "" ? x.FirstName.Contains(FirstName) || x.LastName.Contains(FirstName) : (true))
+                             && (FirstName != "" ? x.FirstName.StartsWith(FirstName) || x.LastName.StartsWith(FirstName) : (true))
                              && (Mobile != "" ? x.Mobile == Mobile : (true))
                              orderby x.UserId descending
-                             select (new usp_EmployeeDetails
+                             //select (new usp_EmployeeDetails
+                             select (new Employee
                              {
                                  UserId = x.UserId,
                                  FirstName = x.FirstName,
                                  BirthDate = x.BirthDate,
-                                 CreatedOn = x.CreatedOn,
-                                 CreatedBy = x.CreatedBy,
+                                 CreatedOn = x.CreatedOn ?? null,
+                                 CreatedBy = x.CreatedBy ?? null,
                                  DesignationId = x.DesignationId,
-                                 DesignationName = desig.DesignationName,
+                                 //DesignationName = desig.DesignationName,  //for usp_EmployeeDetails
                                  DepartmentId = x.DepartmentId,
-                                 DepartmentName = dept.DepartmentName,
+                                 //DepartmentName = dept.DepartmentName,   //for usp_EmployeeDetails
                                  EmailId = x.EmailId,
                                  Mobile = x.Mobile,
                                  IsActive = x.IsActive,
@@ -91,29 +98,48 @@ namespace Repositories.Repositories
                                  PhotoUrl = x.PhotoUrl,
                                  DocumentUrl = x.DocumentUrl,
                                  VideoUrl = x.VideoUrl,
+                                 Department = new Department
+                                 {                                     
+                                     DepartmentName = dept.DepartmentName ?? null,
+                                     CreatedBy = dept.CreatedBy ?? null,
+                                     CreatedOn = dept.CreatedOn ?? null,
+                                     ModifiedBy = dept.ModifiedBy ?? null,
+                                     ModifiedOn = dept.ModifiedOn ?? null,
+                                 } ?? null,
+                                 Designation = new Designation
+                                 {
+                                     //Id = desig.Id,
+                                     DesignationName = desig.DesignationName ?? null,
+                                     CreatedBy = desig.CreatedBy ?? null,
+                                     CreatedOn = desig.CreatedOn ?? null,
+                                     ModifiedBy = desig.ModifiedBy ?? null,
+                                     ModifiedOn = desig.ModifiedOn ?? null,
+                                 } ?? null
                              });
                 //var dataList = await dataList2.OrderBy(y => y.FirstName)
                 //.Skip((pageNo - 1) * pageSize)
                 //.Take(pageSize)
                 //.ToListAsync();
 
-                var sqlRawOrder = sqlRaw.OrderBy(y => y.UserId);
-                var dataList = new List<usp_EmployeeDetails>();
+                var sqlRawOrder = sqlRaw.OrderByDescending(y => y.UserId);
+                //var dataList = new List<usp_EmployeeDetails>();
+                var dataList = new List<Employee>();
                 if (pageNo == 0 || pageSize == 0)
                     dataList = await sqlRawOrder.ToListAsync();
                 else
                     dataList = await sqlRawOrder.Skip((pageNo - 1) * pageSize).Take(pageSize).ToListAsync();
 
                 int i = 0;
-                foreach (var item in dataList)
-                    item.RowNo = ++i;
+                //foreach (var item in dataList)
+                //    item.RowNo = ++i;
 
-                usp_EmployeeDetails_Vm.EmployeeDetails_List = dataList;
-                usp_EmployeeDetails_Vm.totalRecords = sqlRaw.Count();
-                usp_EmployeeDetails_Vm.pageNo = pageNo;
-                usp_EmployeeDetails_Vm.pageSize = pageSize;
+                employee_Vm.EmployeeDetails_List = dataList;
+                employee_Vm.totalRecords = sqlRaw.Count();
+                employee_Vm.pageNo = pageNo;
+                employee_Vm.pageSize = pageSize;
 
-                return (0, "", usp_EmployeeDetails_Vm);
+                //return (0, "", usp_EmployeeDetails_Vm);
+                return (0, "", employee_Vm);
             }
             catch (Exception ex)
             {
@@ -174,11 +200,15 @@ namespace Repositories.Repositories
                     return (400, "Entity set 'AppDbContext.Employee'  is null.", null);
                 }
 
-                if(!_context.Department.Any(x => x.Id == employee.DepartmentId))
+                //if(!_context.Department.Any(x => x.Id == employee.DepartmentId))
+                var dept = await _context.Department.FindAsync(employee.DepartmentId);
+                if (dept is null)
                 {
                     return (400, "Invalid Department Code.", null);
                 }
-                if(!_context.Designation.Any(x => x.Id == employee.DesignationId))
+                //if(!_context.Designation.Any(x => x.Id == employee.DesignationId))
+                var desig = await _context.Designation.FindAsync(employee.DesignationId);
+                if (desig is null)
                 {
                     return (400, "Invalid Designation Code.", null);
                 }
@@ -189,6 +219,10 @@ namespace Repositories.Repositories
 
                 _context.Employee.Add(employee);
                 await _context.SaveChangesAsync();
+
+                //employee.Department.DepartmentName = dept.DepartmentName;
+                //employee.Designation.DesignationName = desig.DesignationName;
+
                 return (0, "", employee);
             }
             catch (Exception ex)
@@ -231,11 +265,15 @@ namespace Repositories.Repositories
                 return (400, "Invalid request", null);
             }
 
-            if (!_context.Department.Any(x => x.Id == employee.DepartmentId))
+            //if(!_context.Department.Any(x => x.Id == employee.DepartmentId))
+            var dept = await _context.Department.FindAsync(employee.DepartmentId);
+            if (dept is null)
             {
                 return (400, "Invalid Department Code.", null);
             }
-            if (!_context.Designation.Any(x => x.Id == employee.DesignationId))
+            //if(!_context.Designation.Any(x => x.Id == employee.DesignationId))
+            var desig = await _context.Designation.FindAsync(employee.DesignationId);
+            if (desig is null)
             {
                 return (400, "Invalid Designation Code.", null);
             }

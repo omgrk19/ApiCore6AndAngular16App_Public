@@ -28,6 +28,10 @@ namespace DataModels.Models
         public string? CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string? ModifiedBy { get; set; }
+
+        public Department? Department { get; set; } = default!;
+        public Designation? Designation { get; set; } = default!;
+
     }
     public class usp_EmployeeDetails
     {
@@ -67,6 +71,13 @@ namespace DataModels.Models
         public int pageSize { get; set; }
         public int totalRecords { get; set; }
         public List<usp_EmployeeDetails> EmployeeDetails_List { get; set; }
+    }
+    public class Employee_Vm
+    {
+        public int pageNo { get; set; }
+        public int pageSize { get; set; }
+        public int totalRecords { get; set; }
+        public List<Employee> EmployeeDetails_List { get; set; }
     }
 
     public class EmployeeDetailDb : Designation_MasterDb

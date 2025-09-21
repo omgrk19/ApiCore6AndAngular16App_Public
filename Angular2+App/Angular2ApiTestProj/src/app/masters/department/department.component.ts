@@ -7,7 +7,7 @@ import { InputComponent } from 'src/app/shared/input/input.component';
 import { ModelComponent } from 'src/app/shared/model/model.component';
 import * as DepartmentActions from 'src/app/ngrxutility/store/department/department.actions';
 import { Store } from '@ngrx/store';
-import { selectDepartmentDataLoaded, selectDepartmentId, selectDepartmentList, selectDepartmentName } from 'src/app/ngrxutility/store/department/department.selectors';
+import { selectDepartmentById, selectDepartmentDataLoaded, selectDepartmentId, selectDepartmentList, selectDepartmentName } from 'src/app/ngrxutility/store/department/department.selectors';
 
 @Component({
   selector: 'app-department',
@@ -156,7 +156,8 @@ export class DepartmentComponent {
         next: (res) => {
 
           console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserListSearch(this.pageNo);
+          // this.fn_UserListSearch(this.pageNo);
+          this.store.dispatch(DepartmentActions.updateDepartment({ department: res }));
           this.fn_reset()
         },
         error: (err) => {
@@ -190,8 +191,12 @@ export class DepartmentComponent {
       this.formGroupUserDataForm.value.id = 0
       this.serviceUserApiService.postDept(this.formGroupUserDataForm.value).subscribe({
         next: (res) => {
-          //console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserListSearch(this.pageNo);
+          debugger
+          console.log("RKS:Post:", JSON.stringify(res));
+
+          // this.fn_UserListSearch(this.pageNo);
+          this.store.dispatch(DepartmentActions.addDepartment({ department: res }));
+
           this.fn_reset()
         },
         error: (err) => {
@@ -231,13 +236,44 @@ export class DepartmentComponent {
     //add waiting cursor
     this.waitingService.fn_showLoader()
 
-    // let curDate = new Date()k
-    // this.formGroupUserDataForm.value.createOn = curDate;
-    // this.formGroupUserDataForm.value.modifieldOn = curDate;
+    // // let curDate = new Date()k
+    // // this.formGroupUserDataForm.value.createOn = curDate;
+    // // this.formGroupUserDataForm.value.modifieldOn = curDate;
 
-    this.serviceUserApiService.getDept(uid).subscribe({
-      next: (res) => {
-        //console.log("RKS:Post:", JSON.stringify(res));             
+    // this.serviceUserApiService.getDept(uid).subscribe({
+    //   next: (res) => {
+    //     //console.log("RKS:Post:", JSON.stringify(res));             
+
+    //     this.formGroupUserDataForm.get('id')?.setValue(res.id)
+    //     this.formGroupUserDataForm.get('departmentName')?.setValue(res.departmentName);
+
+    //     // this._tvDepartmentName.nativeElement.focus();
+    //     this.inputComponent.fn_focus("departmentName")
+    //     this._tv_btn_save.nativeElement.value = "Update";
+    //     this.btn_save_text = "Update"
+    //     //disable waiting cursor
+    //     document.body.style.cursor = 'default'
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
+
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //     this.fn_showModel(JSON.stringify(err.error), "error")
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // });
+
+    
+    this.store.select(selectDepartmentById(uid)).subscribe(res => {
+      
+      if (res) {
 
         this.formGroupUserDataForm.get('id')?.setValue(res.id)
         this.formGroupUserDataForm.get('departmentName')?.setValue(res.departmentName);
@@ -248,22 +284,12 @@ export class DepartmentComponent {
         this.btn_save_text = "Update"
         //disable waiting cursor
         document.body.style.cursor = 'default'
-      },
-      error: (err) => {
         this.waitingService.fn_hideLoader()
 
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-        this.fn_showModel(JSON.stringify(err.error), "error")
-      },
-      complete: () => {
-        this.waitingService.fn_hideLoader()
       }
-    });
+    })
+
+
   }
 
   fn_DeleteRecord(uid: number) {
@@ -282,7 +308,8 @@ export class DepartmentComponent {
 
     this.serviceUserApiService.deleteDept(uid).subscribe({
       next: (res) => {
-        this.fn_UserListSearch(this.pageNo);
+        // this.fn_UserListSearch(this.pageNo);
+        this.store.dispatch(DepartmentActions.deleteDepartment({ id: uid }));
 
       },
       error: (err) => {

@@ -115,14 +115,18 @@
                         </div>
                         <div class="col-auto">
                             <label for="birthDate">DOB</label>
-                            <input type="date" class="form-control" formControlName="birthDate"
+                            <!-- <input type="date" class="form-control" formControlName="birthDate"
                                 value="{{ birthDate2 | date:'yyyy-MM-dd' }}" aria-describedby="birthDate"
+                                placeholder="Birsth Date"> -->
+                            <input type="date" class="form-control" formControlName="birthDate" value="{{ birthDate2 | date:'yyyy-MM-dd' }}" 
+                                aria-describedby="birthDate"
                                 placeholder="Birsth Date">
 
                         </div>
                          <div class="col-auto">
                             <br>
-                            <div class="form-check form-check-inline mt-3">
+                            <!--Use for get data from database/api response  [(ngModel)]="gender"  -->
+                            <!-- <div class="form-check form-check-inline mt-3">
                                 <input type="radio" class="form-check-input" formControlName="gender"
                                     [value]="'Male'" [(ngModel)]="gender" id="gender1" >
                                 <label class="form-check-label" for="gender1">Male</label>
@@ -136,11 +140,27 @@
                                 <input type="radio" class="form-check-input" formControlName="gender"
                                     [value]="'Other'" [(ngModel)]="gender" id="gender3">
                                 <label class="form-check-label" for="gender3">Other</label>
+                            </div> -->
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Male'" id="gender1" >
+                                <label class="form-check-label" for="gender1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Female'" id="gender2">
+                                <label class="form-check-label" for="gender2">Female</label>
+                            </div>                            
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="gender"
+                                    [value]="'Other'" id="gender3">
+                                <label class="form-check-label" for="gender3">Other</label>
                             </div>
                         </div>
                         <div class="col-auto">
                             <br>
-                            <div class="form-check form-check-inline mt-3">
+                            <!--Use for get data from database/api response  [(ngModel)]="isMarried"  -->
+                            <!-- <div class="form-check form-check-inline mt-3">
                                 <input type="radio" class="form-check-input" formControlName="isMarried"
                                     [value]="true" [(ngModel)]="isMarried" id="inlineRadio1">
                                 <label class="form-check-label" for="inlineRadio1">Married</label>
@@ -148,6 +168,16 @@
                             <div class="form-check form-check-inline">
                                 <input type="radio" class="form-check-input" formControlName="isMarried"
                                     [value]="false" [(ngModel)]="isMarried" id="inlineRadio2">
+                                <label class="form-check-label" for="inlineRadio2">Unmarried</label>
+                            </div> -->
+                            <div class="form-check form-check-inline mt-3">
+                                <input type="radio" class="form-check-input" formControlName="isMarried"
+                                    [value]="true" id="inlineRadio1">
+                                <label class="form-check-label" for="inlineRadio1">Married</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" formControlName="isMarried"
+                                    [value]="false" id="inlineRadio2">
                                 <label class="form-check-label" for="inlineRadio2">Unmarried</label>
                             </div>
                         </div>

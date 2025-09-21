@@ -52,7 +52,7 @@ export class ManageDesignationComponent {
   formGroupUserDataForm = new FormGroup({
     id: this.id,
     departmentId: this.departmentId,
-    designationId: this.designationId,
+    designationId: this.designationId,    
   })
 
 
@@ -99,7 +99,7 @@ export class ManageDesignationComponent {
   fn_loadData() {
     this.fn_departmentList()
     this.fn_designationList()
-    this.fn_UserList(this.pageNo)
+    this.fn_UserList(this.pageNo, this.fltrDepartmentId?.toString(), this.fltrDesignationId?.toString())
   }
 
   fn_PageChange(pageNo: number) {
@@ -180,6 +180,8 @@ export class ManageDesignationComponent {
     this.serviceUserApiService.postManageDesignation(this.formGroupUserDataForm.value).subscribe({
       next: (res) => {
         //console.log("RKS:Post:", JSON.stringify(res));
+        
+        this.store.dispatch(ManageDesignationActions.addManageDesignation({ manageDesignation: res }))
         this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.departmentId as string, this.formGroupUserDataForm.value.designationId as string);
         // this.formGroupUserDataForm.reset();        
 
@@ -228,6 +230,8 @@ export class ManageDesignationComponent {
 
     this.serviceUserApiService.deleteManageDesignation(uid).subscribe({
       next: (res) => {
+        
+        this.store.dispatch(ManageDesignationActions.deleteManageDesignation({ id: uid }))
         this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.departmentId as string, this.formGroupUserDataForm.value.designationId as string);
 
       },

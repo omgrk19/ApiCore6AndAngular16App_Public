@@ -12,7 +12,7 @@ namespace Services.Services
         {
             _repo = repo;
         }
-        public async Task<(int, string, List<ManageDesignation_Get>)> GetList(ManageDesignation_Filter filter)
+        public async Task<(int, string, List<ManageDesignation>)> GetList(ManageDesignation_Filter filter)
         {
            return await _repo.GetList(filter);
         }

@@ -5,6 +5,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ModelComponent } from 'src/app/shared/model/model.component';
 import { WaitingService } from 'src/app/services/waiting.service';
 import { passwordComplexityValidator } from 'src/app/services/passwordComplexityValidator';
+import * as DepartmentActions from 'src/app/ngrxutility/store/department/department.actions'
+import * as ManageDesignationEmpActions from 'src/app/ngrxutility/store/manageDesignationEmp/manageDesignationEmp.actions'
+import * as EmployeeActions from 'src/app/ngrxutility/store/employee/employee.actions';
+import { Store } from '@ngrx/store';
+import { selectDepartmentList } from 'src/app/ngrxutility/store/department/department.selectors';
+import { selectManageDesignationEmpList } from 'src/app/ngrxutility/store/manageDesignationEmp/manageDesignationEmp.selectors';
 
 
 @Component({
@@ -22,6 +28,11 @@ export class AddnewComponent implements OnInit, AfterViewInit {
   deptList: any = [];
   desigList: any = [];
 
+  deptLoaded: boolean = false;
+  deptLoading: boolean = false;
+  desigLoaded: boolean = false;
+  desigLoading: boolean = false;
+
   userId = new FormControl(0);
   firstName = new FormControl<string>('', Validators.required);
   lastName = new FormControl<string>('');
@@ -29,11 +40,11 @@ export class AddnewComponent implements OnInit, AfterViewInit {
   designationId = new FormControl<number>(0, Validators.required);
   // emailId = new FormControl<string | null>('');
   emailId = new FormControl<string>('', Validators.email);
-  mobile = new FormControl<string | null>('', 
-    [Validators.maxLength(10), 
-    Validators.minLength(10), 
+  mobile = new FormControl<string | null>('',
+    [Validators.maxLength(10),
+    Validators.minLength(10),
     Validators.pattern(/^[0-9]+$/)
-  ]);
+    ]);
   password = new FormControl<string>('', [
     Validators.required,
     passwordComplexityValidator(),
@@ -68,11 +79,15 @@ export class AddnewComponent implements OnInit, AfterViewInit {
   @ViewChild('gender1') maleRadio!: ElementRef;
 
   constructor(private serviceUserApiService: ApiUserService, private formBuilder: FormBuilder,
-    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService) {
+    private router: Router, private route: ActivatedRoute, private waitingService: WaitingService,
+    private store: Store) {
     console.log('AddnewComponent loaded')
   }
 
   ngOnInit(): void {
+
+
+
     this.fn_deptList()
   }
   ngAfterViewInit(): void {
@@ -86,25 +101,33 @@ export class AddnewComponent implements OnInit, AfterViewInit {
     this.waitingService.fn_showLoader()
 
     this.deptList = [];
-    this.serviceUserApiService.getDeptList().subscribe({
-      next: (res) => {
-        console.log(res)
-        console.log(JSON.stringify(res))
-        this.deptList = res;
-      },
-      error: (err) => {
-        this.waitingService.fn_hideLoader()
+    // this.serviceUserApiService.getDeptList().subscribe({
+    //   next: (res) => {
+    //     console.log(res)
+    //     console.log(JSON.stringify(res))
+    //     this.deptList = res;
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
 
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-      },
-      complete: () => {
-        this.waitingService.fn_hideLoader()
-      }
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // })
+    this.store.dispatch(DepartmentActions.loadDepartmentRequest({ dataLoaded: this.deptLoaded, dataLoading: this.deptLoading, id: 0, departmentName: '' }));
+
+    this.store.select(selectDepartmentList).subscribe(res => {
+      ;
+      this.deptList = res;
+      this.waitingService.fn_hideLoader()
+      //this.cdr.detectChanges();
     })
   }
 
@@ -112,25 +135,37 @@ export class AddnewComponent implements OnInit, AfterViewInit {
     this.waitingService.fn_showLoader()
 
     this.desigList = [];
-    this.serviceUserApiService.getManageDesignationWithPage(1, 100, 0, departmentId).subscribe({
-      next: (res) => {
-        console.log(res)
-        console.log(JSON.stringify(res))
-        this.desigList = res;
-      },
-      error: (err) => {
-        this.waitingService.fn_hideLoader()
+    // this.serviceUserApiService.getManageDesignationWithPage(1, 100, 0, departmentId).subscribe({
+    //   next: (res) => {
+    //     console.log(res)
+    //     console.log(JSON.stringify(res))
+    //     this.desigList = res;
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
 
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-      },
-      complete: () => {
-        this.waitingService.fn_hideLoader()
-      }
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // })
+
+    this.store.dispatch(ManageDesignationEmpActions.loadManageDesignationEmpRequest({
+      dataLoaded: this.desigLoaded,
+      dataLoading: this.desigLoading, departmentId: Number(departmentId)
+    }));
+
+    this.store.select(selectManageDesignationEmpList).subscribe(res => {
+      ;
+      this.desigList = res;
+      this.waitingService.fn_hideLoader()
+      //this.cdr.detectChanges();
     })
   }
 
@@ -143,11 +178,14 @@ export class AddnewComponent implements OnInit, AfterViewInit {
     this.formGroupUserDataForm.value.createOn = curDate;
     this.formGroupUserDataForm.value.modifieldOn = curDate;
     this.formGroupUserDataForm.value.userId = 0;
-
+    
     this.serviceUserApiService.addEmployee(this.formGroupUserDataForm.value).subscribe({
       next: (res) => {
 
         // console.log("RKS:Post:", JSON.stringify(res));
+
+        this.store.dispatch(EmployeeActions.addEmployee({ employee: res }));
+
         let id = res.userId
 
         //remove waiting cursor
@@ -199,6 +237,6 @@ export class AddnewComponent implements OnInit, AfterViewInit {
     this.modelComponent.fn_show_model()
   }
 
-  
+
 
 }

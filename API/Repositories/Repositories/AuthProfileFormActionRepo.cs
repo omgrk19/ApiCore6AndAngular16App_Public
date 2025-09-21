@@ -61,36 +61,51 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<(int, string, auth_profile_form_action)> Add(auth_profile_form_action data)
+        public async Task<(int, string, auth_profile_form_action_get)> Add(auth_profile_form_action data)
         {
+            
+            auth_profile_form_action_get data2 = new auth_profile_form_action_get()
+            {
+                ActionId = data.ActionId,
+                FormId = data.FormId,
+                ProfileId = data.ProfileId,
+                Id = data.Id
+            };
+            
             try
             {
                 if (_context.auth_profile_form_action == null)
                 {
                     //return BadRequest("Entity set 'AppDbContext.auth_form_mas'  is null.");
-                    return (400, "Entity set 'AppDbContext.auth_form_mas'  is null.", data);
+                    return (400, "Entity set 'AppDbContext.auth_form_mas'  is null.", data2);
                 }
 
                 if (data.ProfileId == "Admin")
                 {
                     //return BadRequest("Admin profile data can not be changed. It is fixed");
-                    return (400, "Admin profile data can not be changed. It is fixed", data);
+                    return (400, "Admin profile data can not be changed. It is fixed", data2);
                 }
 
-                if (!_context.auth_form_mas.Any(x => x.formid == data.FormId))
+                //if (!_context.auth_form_mas.Any(x => x.formid == data.FormId))
+                var form = _context.auth_form_mas.FirstOrDefault(x => x.formid == data.FormId);
+                if (form is null)
                 {
                     //return BadRequest("Invalid form.");
-                    return (400, "Invalid form.", data);
+                    return (400, "Invalid form.", data2);
                 }
-                if (!_context.auth_action.Any(x => x.action == data.ActionId))
+                //if (!_context.auth_action.Any(x => x.action == data.ActionId))
+                var action = _context.auth_action.FirstOrDefault(x => x.action == data.ActionId);
+                if (action is null)
                 {
                     //return BadRequest("Invalid action.");
-                    return (400, "Invalid action.", data);
+                    return (400, "Invalid action.", data2);
                 }
-                if (!_context.auth_profile_mas.Any(x => x.ProfileId == data.ProfileId))
+                //if (!_context.auth_profile_mas.Any(x => x.ProfileId == data.ProfileId))
+                var profile = _context.auth_profile_mas.FirstOrDefault(x => x.ProfileId == data.ProfileId);
+                if (profile is null)
                 {
                     //return BadRequest("Invalid profile.");
-                    return (400, "Invalid profile.", data);
+                    return (400, "Invalid profile.", data2);
                 }
                 if (_context.auth_profile_form_action.Any(x => x.ProfileId == data.ProfileId
                 && x.FormId == data.FormId && x.ActionId == data.ActionId))
@@ -102,7 +117,11 @@ namespace Repositories.Repositories
                 _context.auth_profile_form_action.Add(data);
                 await _context.SaveChangesAsync();
 
-                return (0, "", data);
+                data2.Id = data.Id;
+                data2.FormName = form.form_name;
+                data2.ProfileName = profile.Profile_Name;
+
+                return (0, "", data2);
             }
             catch(Exception ex)
             {

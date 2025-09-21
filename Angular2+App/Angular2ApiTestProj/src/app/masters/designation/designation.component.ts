@@ -8,7 +8,7 @@ import { InputComponent } from 'src/app/shared/input/input.component';
 import { ModelComponent } from 'src/app/shared/model/model.component';
 // import * as DepartmentActions from 'src/app/ngrxutility/store/department/department.actions';
 import * as DesignationActions from 'src/app/ngrxutility/store/designation/designation.actions';
-import { selectDesignationDataLoaded, selectDesignationDataLoading, selectDesignationId, selectDesignationList, selectDesignationName } from 'src/app/ngrxutility/store/designation/designation.selectors';
+import { selectDesignationById, selectDesignationDataLoaded, selectDesignationDataLoading, selectDesignationId, selectDesignationList, selectDesignationName } from 'src/app/ngrxutility/store/designation/designation.selectors';
 
 @Component({
   selector: 'app-designation',
@@ -84,7 +84,7 @@ export class DesignationComponent {
   }
 
   fn_PageChange(pageNo: number) {
-    debugger;
+    ;
     pageNo = (pageNo < 1 ? 1 : pageNo > this.pageQty ? this.pageQty : pageNo);
     this.fn_UserList(pageNo);
   }
@@ -97,14 +97,14 @@ export class DesignationComponent {
     this.fn_UserList(pageNo, id, designationName);
   }
   fn_UserList(pageNo: number, id: number = 0, designationName: string = "") {
-    // debugger
+    // 
     this.waitingService.fn_showLoader()
 
     this.userList = [];
     // this.serviceUserApiService.getDesigsWithPage(pageNo, this.pageSize, 0, 0, designationName).subscribe({
     //   next: (res) => {
     //     console.log("RKS:", JSON.stringify(res));
-    //     // debugger;
+    //     // ;
     //     this.userList = res;
     //     // let totalRecords = Number(res.totalRecords);
     //     this.pageNo = pageNo;
@@ -148,7 +148,7 @@ export class DesignationComponent {
   }
 
   fn_Paging(totalRecords: number) {
-    // debugger;
+    // ;
     this.pageQty = Math.ceil(totalRecords / this.pageSize);
   }
 
@@ -164,9 +164,10 @@ export class DesignationComponent {
       // this.formGroupUserDataForm.value.modifieldOn = curDate;
       this.serviceUserApiService.putDesig(Number(this.formGroupUserDataForm.value.id), this.formGroupUserDataForm.value).subscribe({
         next: (res) => {
-          debugger;
+          
           console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserList(this.pageNo);
+          // this.fn_UserList(this.pageNo);
+          this.store.dispatch(DesignationActions.updateDesignation({ designation: res }));
           this.formGroupUserDataForm.reset();
           this.fn_reset()
 
@@ -207,9 +208,10 @@ export class DesignationComponent {
       this.formGroupUserDataForm.value.id = 0;
       this.serviceUserApiService.postDesig(this.formGroupUserDataForm.value).subscribe({
         next: (res) => {
-          debugger;
+          
           console.log("RKS:Post:", JSON.stringify(res));
-          this.fn_UserList(this.pageNo);
+          // this.fn_UserList(this.pageNo);
+          this.store.dispatch(DesignationActions.addDesignation({ designation: res }));
           this.fn_reset()
 
         },
@@ -258,49 +260,60 @@ export class DesignationComponent {
     //add waiting cursor
     this.waitingService.fn_showLoader()
 
-    // let curDate = new Date()
-    // this.formGroupUserDataForm.value.createOn = curDate;
-    // this.formGroupUserDataForm.value.modifieldOn = curDate;
+    // // let curDate = new Date()
+    // // this.formGroupUserDataForm.value.createOn = curDate;
+    // // this.formGroupUserDataForm.value.modifieldOn = curDate;
 
-    // this.serviceUserApiService.getDesig(uid).subscribe(res => {
-    this.serviceUserApiService.getDesig(uid).subscribe({
-      next: (res) => {
-        //console.log("RKS:Post:", JSON.stringify(res));             
+    // this.serviceUserApiService.getDesig(uid).subscribe({
+    //   next: (res) => {
+    //     //console.log("RKS:Post:", JSON.stringify(res));             
 
+    //     this.formGroupUserDataForm.get('id')?.setValue(res.id)
+    //     this.formGroupUserDataForm.get('designationName')?.setValue(res.designationName);
+
+    //     this.inputComponent.fn_focus("designationName")
+    //     this._tv_btn_save.nativeElement.value = "Update";
+    //     this.btn_save_text = "Update"
+    //   },
+    //   error: (err) => {
+    //     this.waitingService.fn_hideLoader()
+
+    //     if (err.status === 403) {
+    //       this.router.navigateByUrl(`/unauthorize`)
+    //     }
+    //     if (err.status === 401) {
+    //       this.router.navigateByUrl(`/unauthenticate`)
+    //     }
+    //     // this.router.navigate(['/unauthorize'], {
+    //     //   relativeTo: this.route,
+    //     //   queryParams: {
+    //     //     msg: err.error
+    //     //   }
+    //     // })
+    //     this.fn_showModel(err.error, "error")
+    //   },
+    //   complete: () => {
+    //     this.waitingService.fn_hideLoader()
+    //   }
+    // });
+
+
+    this.store.select(selectDesignationById(uid)).subscribe(res => {      
+      if (res) {
         this.formGroupUserDataForm.get('id')?.setValue(res.id)
         this.formGroupUserDataForm.get('designationName')?.setValue(res.designationName);
 
         this.inputComponent.fn_focus("designationName")
         this._tv_btn_save.nativeElement.value = "Update";
         this.btn_save_text = "Update"
-      },
-      error: (err) => {
-        this.waitingService.fn_hideLoader()
-
-        if (err.status === 403) {
-          this.router.navigateByUrl(`/unauthorize`)
-        }
-        if (err.status === 401) {
-          this.router.navigateByUrl(`/unauthenticate`)
-        }
-        // this.router.navigate(['/unauthorize'], {
-        //   relativeTo: this.route,
-        //   queryParams: {
-        //     msg: err.error
-        //   }
-        // })
-        this.fn_showModel(err.error, "error")
-      },
-      complete: () => {
         this.waitingService.fn_hideLoader()
       }
+    })
 
-
-    });
   }
 
   fn_DeleteRecord(uid: number) {
-    debugger;
+    ;
     if (!confirm("Are you sure to delete record?")) {
       return;
     }
@@ -315,7 +328,8 @@ export class DesignationComponent {
 
     this.serviceUserApiService.deleteDesig(uid).subscribe({
       next: (res) => {
-        this.fn_UserList(this.pageNo);
+        // this.fn_UserList(this.pageNo);
+        this.store.dispatch(DesignationActions.deleteDesignation({ id: uid }));
       },
       error: (err) => {
         this.waitingService.fn_hideLoader()

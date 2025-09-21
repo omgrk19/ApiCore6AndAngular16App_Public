@@ -46,5 +46,14 @@ export const authManageProfileFormActReducer = createReducer(
     loaded: false,
     authManageProfileFormActList: [],
     error: action.errorText
-  }))
+  })),
+  on(AuthManageProfileFormActActions.addAuthManageProfileFormAct, (state, { authManageProfileFormAct }) => ({
+      ...state,
+      //departments: [...state.departments, department],    //added at the end
+      authManageProfileFormActList: [authManageProfileFormAct, ...state.authManageProfileFormActList],  //added at the beginning
+    })),    
+    on(AuthManageProfileFormActActions.deleteAuthManageProfileFormAct, (state, { id }) => ({
+      ...state,
+      authManageProfileFormActList: state.authManageProfileFormActList.filter(x => x.id !== id)
+    })),
 );

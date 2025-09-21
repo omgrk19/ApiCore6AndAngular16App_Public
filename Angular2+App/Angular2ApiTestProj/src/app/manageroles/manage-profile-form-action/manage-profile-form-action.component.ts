@@ -215,9 +215,10 @@ export class ManageProfileFormActionComponent implements OnInit, AfterViewInit {
 
     this.serviceUserApiService.postManageProfileFormAction(this.formGroupUserDataForm.value).subscribe({
       next: (res) => {
-
+       debugger
         console.log("RKS:Post:", JSON.stringify(res));
-        this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.profileId?.toString(), this.formGroupUserDataForm.value.formId?.toString());
+        // this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.profileId?.toString(), this.formGroupUserDataForm.value.formId?.toString());
+        this.store.dispatch(AuthManageProfileFormActActions.addAuthManageProfileFormAct({ authManageProfileFormAct: res }))
 
       },
       error: (err) => {
@@ -254,7 +255,8 @@ export class ManageProfileFormActionComponent implements OnInit, AfterViewInit {
     }
 
     //add waiting cursor
-    document.body.style.cursor = 'wait'
+    // document.body.style.cursor = 'wait'
+    this.waitingService.fn_showLoader()
 
     // this.formGroupUserDataForm.value.lastName="rinkesh testing"
     // let curDate = new Date()
@@ -263,7 +265,8 @@ export class ManageProfileFormActionComponent implements OnInit, AfterViewInit {
 
     this.serviceUserApiService.deleteManageProfileFormAction(uid).subscribe({
       next: (res) => {
-        this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.profileId?.toString(), this.formGroupUserDataForm.value.formId?.toString());
+        // this.fn_UserList(this.pageNo, this.formGroupUserDataForm.value.profileId?.toString(), this.formGroupUserDataForm.value.formId?.toString());
+        this.store.dispatch(AuthManageProfileFormActActions.deleteAuthManageProfileFormAct({ id: uid }))
         //disable waiting cursor
         document.body.style.cursor = 'default'
       },
@@ -284,7 +287,8 @@ export class ManageProfileFormActionComponent implements OnInit, AfterViewInit {
         this.fn_showModel(err.error, "error")
       },
       complete: () => {
-        document.body.style.cursor = 'default'
+        // document.body.style.cursor = 'default'
+        this.waitingService.fn_hideLoader()
       }
     })
   }

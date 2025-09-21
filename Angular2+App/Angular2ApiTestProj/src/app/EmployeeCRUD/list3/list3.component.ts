@@ -376,8 +376,8 @@ export class List3Component implements OnInit {
     this.waitingService.fn_showLoader()
     this.serviceUserApiService.deleteEmployee(uid).subscribe({
       next: (res) => {
-        this.fn_UserList(this.pageNo);
-
+        this.store.dispatch(EmployeeActions.deleteEmployee({ id: uid })); 
+         //   this.fn_UserList(this.pageNo);       
       },
       error: (err) => {
         this.waitingService.fn_hideLoader()

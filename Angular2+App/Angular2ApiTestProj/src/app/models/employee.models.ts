@@ -22,7 +22,8 @@ export interface IEmployee {
     modifiedOn: Date,
     modifiedBy: string,
     rowNo: number,
-
+    department?: { id?: number, departmentName?: string },
+    designation?: { id?: number, designationName?: string },
 }
 
 export interface IDepartment {
@@ -40,6 +41,8 @@ export interface IManageDesignation {
     departmentName: string,    
     designationId: number,
     designationName: string,
+    department?: { id?: number, departmentName?: string },
+    designation?: { id?: number, designationName?: string },
 }
 
 export interface IAuthForms {

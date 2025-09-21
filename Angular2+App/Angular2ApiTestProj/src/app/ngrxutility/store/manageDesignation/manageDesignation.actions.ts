@@ -7,6 +7,8 @@ import { IManageDesignation } from "src/app/models/employee.models";
 export const typeLoadManageDesignationRequest = '[ManageDesignation] Load ManageDesignation Request';
 export const typeLoadManageDesignationSuccess = '[ManageDesignation] Load ManageDesignation Success';
 export const typeLoadManageDesignationFailure = '[ManageDesignation] Load ManageDesignation Failure';
+export const typeLoadManageDesignationAdd = '[ManageDesignation] Load ManageDesignation Add';
+export const typeLoadManageDesignationDelete = '[ManageDesignation] Load ManageDesignation Delete';
 
 export const loadManageDesignationRequest = createAction(
   typeLoadManageDesignationRequest,
@@ -23,4 +25,14 @@ export const loadManageDesignationSuccess = createAction(
 export const loadManageDesignationFailure = createAction(
   typeLoadManageDesignationFailure,
   props<{ errorText: string }>()
+);
+
+export const addManageDesignation = createAction(
+  typeLoadManageDesignationAdd,
+  props<{ manageDesignation: IManageDesignation }>()
+);
+
+export const deleteManageDesignation = createAction(
+  typeLoadManageDesignationDelete,
+  props<{ id: number }>()
 );

@@ -33,5 +33,9 @@ export const selectDepartmentId = createSelector(
   state => state.fltId
 );
 
+export const selectDepartmentById = (id: number) => createSelector(
+  selectDepartmentList,
+  (departments) => departments.find(dept => dept.id === id)
+)
 
 

@@ -13,7 +13,7 @@ namespace Repositories.Repositories
         {
             _context = context;
         }
-        public async Task<(int, string, List<ManageDesignation_Get>)> GetList(ManageDesignation_Filter filter)
+        public async Task<(int, string, List<ManageDesignation>)> GetList(ManageDesignation_Filter filter)
         {
             try
             {
@@ -33,13 +33,21 @@ namespace Repositories.Repositories
                            && (filter.DepartmentId != 0 ? x.DepartmentId == filter.DepartmentId : true)
                            && (filter.DesignationId != 0 ? x.DesignationId == filter.DesignationId : true)
                            orderby d.DepartmentName ascending, g.DesignationName ascending
-                           select (new ManageDesignation_Get
+                           select (new ManageDesignation
                            {
                                Id = x.Id,
                                DesignationId = x.DesignationId,
                                DepartmentId = x.DepartmentId,
-                               DepartmentName = d.DepartmentName,
-                               DesignationName = g.DesignationName
+                               //DepartmentName = d.DepartmentName,
+                               //DesignationName = g.DesignationName
+                               Department = new Department
+                               {
+                                   DepartmentName = d.DepartmentName,
+                               },
+                               Designation = new Designation
+                               {
+                                   DesignationName = g.DesignationName,
+                               }
                            });
                 return (0, "", await data.ToListAsync());
             }
@@ -57,12 +65,16 @@ namespace Repositories.Repositories
                     //return BadRequest("Entity set 'AppDbContext.auth_form_mas'  is null.");
                     return (400, "Entity set 'AppDbContext.auth_form_mas'  is null.", Model);
                 }
-                if (!_context.Department.Any(x => x.Id == Model.DepartmentId))
+                //if (!_context.Department.Any(x => x.Id == Model.DepartmentId))
+                var dept = _context.Department.Find(Model.DepartmentId);
+                if (dept is null)
                 {
                     //return BadRequest("Invalid department.");
                     return (400, "Invalid department.", Model);
                 }
-                if (!_context.Designation.Any(x => x.Id == Model.DesignationId))
+                //if (!_context.Designation.Any(x => x.Id == Model.DesignationId))
+                var desig = _context.Designation.Find(Model.DesignationId);
+                if (desig is null)
                 {
                     //return BadRequest("Invalid designation.");
                     return (400, "Invalid designation.", Model);

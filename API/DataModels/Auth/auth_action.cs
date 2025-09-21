@@ -4,8 +4,8 @@ namespace DataModels.Auth
 {
     public class auth_action
     {
-        [Key]
         public int Id { get; set; }
+        [Key]
         public string? action { get; set; }
     }
     public class auth_action_filter

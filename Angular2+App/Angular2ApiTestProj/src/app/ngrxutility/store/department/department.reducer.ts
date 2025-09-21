@@ -42,5 +42,18 @@ export const departmentReducer = createReducer(
     loaded: false,
     departments: [],
     error: action.errorText
-  }))
+  })),
+  on(DepartmentActions.addDepartment, (state, { department }) => ({
+    ...state,
+    //departments: [...state.departments, department],    //added at the end
+    departments: [department, ...state.departments],  //added at the beginning
+  })),
+  on(DepartmentActions.updateDepartment, (state, { department }) => ({
+    ...state,
+    departments: state.departments.map(dep => dep.id === department.id ? department : dep)
+  })),
+  on(DepartmentActions.deleteDepartment, (state, { id }) => ({
+    ...state,
+    departments: state.departments.filter(dep => dep.id !== id)
+  })),
 );

@@ -57,23 +57,7 @@ export const selectEmployeeMobile = createSelector(
   state => state.mobile
 );
 
-
-// export const selectTotal = createSelector(
-//   selectEmployeeFeatureState,
-//   state => state.total
-// );
-
-// export const selectPage = createSelector(
-//   selectEmployeeFeatureState,
-//   state => state.page
-// );
-
-// export const selectLimit = createSelector(
-//   selectEmployeeFeatureState,
-//   state => state.limit
-// );
-
-// export const selectLoading = createSelector(
-//   selectEmployeeFeatureState,
-//   state => state.loading
-// );
+export const selectEmployeeById = (id: number) => createSelector(
+  selectEmployeesInfo,
+  (employees) => employees.employeeDetails_List.find(emp => emp.userId === id)
+)

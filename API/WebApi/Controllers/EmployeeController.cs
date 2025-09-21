@@ -32,7 +32,8 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Employee-List")]
         [HttpGet]
-        public async Task<ActionResult<usp_EmployeeDetails_Vm>> GetEmployee([FromQuery] EmployeeFilter filter)
+        //public async Task<ActionResult<usp_EmployeeDetails_Vm>> GetEmployee([FromQuery] EmployeeFilter filter)
+        public async Task<ActionResult<Employee_Vm>> GetEmployee([FromQuery] EmployeeFilter filter)
         {
             try
             {
@@ -136,7 +137,7 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin,User")]
         [Authorize(Roles = "Employee-Add")]
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(EmployeeInserteDTO Employee)
+        public async Task<ActionResult<EmployeeDTO>> PostEmployee(EmployeeInserteDTO Employee)
         {
             try
             {

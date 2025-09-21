@@ -69,5 +69,18 @@ export const employeeReducer = createReducer(
     loaded: false,
     employeeDetails_List: [],
     error: action.errorText
-  }))
+  })),
+  on(EmployeeActions.addEmployee, (state, { employee }) => ({
+    ...state,
+    //employees: [...state.employees, employee],    //added at the end
+    employeeDetails_List: [employee, ...state.employeeDetails_List],  //added at the beginning
+  })),
+  on(EmployeeActions.updateEmployee, (state, { employee }) => ({
+    ...state,
+    employeeDetails_List: state.employeeDetails_List.map(emp => emp.userId === employee.userId ? employee : emp)
+  })),
+  on(EmployeeActions.deleteEmployee, (state, { id }) => ({
+    ...state,
+    employeeDetails_List: state.employeeDetails_List.filter(des => des.userId !== id)
+  })),
 );

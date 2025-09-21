@@ -85,8 +85,8 @@
                             <tbody>
                                 <tr *ngFor="let data of userList; let i = index">
                                     <td>{{ (i+1) }}</td>                                  
-                                    <td>{{ data.departmentName }}</td>
-                                    <td>{{ data.designationName }}</td>
+                                    <td>{{ data.department.departmentName }}</td>
+                                    <td>{{ data.designation.designationName }}</td>
                                     
                                     <td>
                                         <!-- <a (click)="fn_FillDataToUpdate(data.id)"><i

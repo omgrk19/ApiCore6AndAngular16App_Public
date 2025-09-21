@@ -20,7 +20,8 @@ namespace Services.Services
 
         public async Task<(int, string, object)> Add(EmployeeInserteDTO Employee)
         {
-            var data = await _repo.Add(_mapper.Map<Employee>(Employee));
+            var model = _mapper.Map<Employee>(Employee);
+            var data = await _repo.Add(model);
             return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 
@@ -36,14 +37,16 @@ namespace Services.Services
             return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 
-        public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
+        //public async Task<(int, string, usp_EmployeeDetails_Vm)> GetList(EmployeeFilter filter)
+        public async Task<(int, string, Employee_Vm)> GetList(EmployeeFilter filter)
         {
             return await _repo.GetList(filter);
         }
 
         public async Task<(int, string, object)> Update(int id, EmployeeUpdateDTO Employee)
         {
-            var data = await _repo.Update(id, _mapper.Map<Employee>(Employee));
+            var model = _mapper.Map<Employee>(Employee);
+            var data = await _repo.Update(id, model);
             return (data.Item1, data.Item2, _mapper.Map<EmployeeDTO>(data.Item3));
         }
 

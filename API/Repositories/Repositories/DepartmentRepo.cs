@@ -49,7 +49,7 @@ namespace Repositories.Repositories
                 filter.Id = filter.Id == null ? 0 : filter.Id;
                 var data = from x in _context.Department
                            where (filter.Id > 0 ? x.Id == filter.Id : true)
-                           && (filter.DepartmentName != "" ? x.DepartmentName == filter.DepartmentName : true)
+                           && (filter.DepartmentName != "" ? x.DepartmentName.StartsWith(filter.DepartmentName) : true)
                            orderby x.Id descending
                            select x;
                 var dataList = await data.ToListAsync();

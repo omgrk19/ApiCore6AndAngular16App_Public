@@ -43,7 +43,15 @@ export const manageDesignationReducer = createReducer(
     ...state,
     loading: false,
     loaded: false,
-    designationmanages: [],
+    ManageDesignationList: [],
     error: action.errorText
-  }))
+  })),
+  on(ManageDesignationActions.addManageDesignation, (state, { manageDesignation }) => ({
+    ...state,    
+    ManageDesignationList: [manageDesignation, ...state.ManageDesignationList],  //added at the beginning
+  })),  
+  on(ManageDesignationActions.deleteManageDesignation, (state, { id }) => ({
+    ...state,
+    ManageDesignationList: state.ManageDesignationList.filter(dep => dep.id !== id)
+  })),
 );

@@ -35,6 +35,10 @@ export const selectAuthManageProfileFormActProfileId = createSelector(
   selectAuthManageProfileFormActFeatureState,
   state => state.fltProfileId
 );
+export const selectAuthManageProfileFormActAdd = createSelector(
+  selectAuthManageProfileFormActFeatureState,
+  state => state.fltProfileId
+);
 
 
 

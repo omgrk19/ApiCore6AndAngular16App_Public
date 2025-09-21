@@ -195,7 +195,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let data of userList; let i = index">                                    
-                                    <td>{{ data.rowNo }}</td>                                    
+                                    <td>{{ (i+1) }}</td>                                    
                                     <td><span>{{ data.firstName | gender: data.isMaleorFemale }} </span><span>{{ data.lastName }}</span></td>
                                     <td>{{ data.birthDate | date : 'dd-MMM-yyyy' }}</td>
                                     <td>{{ data.mobile }}</td>

@@ -92,8 +92,8 @@
                                         {{error}}
                                     </td>
                                 </tr>
-                                <tr *ngFor="let data of employeeInfo.employeeDetails_List;">
-                                    <td>{{ data.rowNo }}</td>
+                                <tr *ngFor="let data of employeeInfo.employeeDetails_List; let i = index">
+                                    <td>{{ (i+1) }}</td>
                                     <td>{{ data.userId }}</td>
                                     <!-- <td><span>{{ data.firstName | gender: data.isMaleorFemale }} </span> <span>{{ data.lastName }}</span></td> -->
                                     <td><span>{{ data.firstName }} </span> <span>{{ data.lastName }}</span></td>
@@ -102,8 +102,8 @@
                                     <td>{{ data.emailId }}</td>
                                     <!-- <td>{{ data.isMaleorFemale }}</td> -->
                                     <td>{{ data.gender }}</td>
-                                    <td>{{ data.departmentName }}</td>
-                                    <td>{{ data.designationName }}</td>
+                                    <td>{{ data.department?.departmentName }}</td>
+                                    <td>{{ data.designation?.designationName }}</td>
                                     <td>
                                         <a routerLink="/employee/edit/{{data.userId}}"><i
                                                 class="fa fa-pen-square"></i></a>

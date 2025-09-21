@@ -7,7 +7,7 @@ namespace Repositories.Repositories.Interfaces
     public interface IManageDesignationRepo : ICommonCreateRepo<ManageDesignation>, ICommonDeleteRepo<ManageDesignation>
     {
 
-        Task<(int, string, List<ManageDesignation_Get>)> GetList(ManageDesignation_Filter filter);
+        Task<(int, string, List<ManageDesignation>)> GetList(ManageDesignation_Filter filter);
 
     }
 }

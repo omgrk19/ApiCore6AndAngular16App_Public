@@ -42,5 +42,18 @@ export const designationReducer = createReducer(
     loaded: false,
     designations: [],
     error: action.errorText
-  }))
+  })),
+  on(DesignationActions.addDesignation, (state, { designation }) => ({
+    ...state,
+    //designations: [...state.designations, designation],    //added at the end
+    designations: [designation, ...state.designations],  //added at the beginning
+  })),
+  on(DesignationActions.updateDesignation, (state, { designation }) => ({
+    ...state,
+    designations: state.designations.map(dep => dep.id === designation.id ? designation : dep)
+  })),
+  on(DesignationActions.deleteDesignation, (state, { id }) => ({
+    ...state,
+    designations: state.designations.filter(des => des.id !== id)
+  })),
 );
